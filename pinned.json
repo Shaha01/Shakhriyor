@@ -27,6 +27,15 @@
     "language": "SCSS"
   },
   {
+    "repo": "Shaha01/Weather-VUE",
+    "name": "Weather-VUE",
+    "description": "",
+    "homepage": "https://shaha01.github.io/Weather-VUE/",
+    "stars": 1,
+    "pushed": "2026-11-13T20:58:52Z",
+    "language": "HTML"
+  },
+  {
     "repo": "Shaha01/PingPong",
     "name": "PingPong",
     "description": "",
@@ -34,14 +43,5 @@
     "stars": 0,
     "pushed": "2024-08-12T12:32:07Z",
     "language": "JavaScript"
-  },
-  {
-    "repo": "Shaha01/vue-cinema",
-    "name": "vue-cinema",
-    "description": "",
-    "homepage": "https://shaha01.github.io/vue-cinema/",
-    "stars": 1,
-    "pushed": "2024-09-25T12:24:39Z",
-    "language": "CSS"
   }
 ]
