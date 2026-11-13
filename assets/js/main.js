@@ -338,32 +338,36 @@
      Projects
      --------------------------------------------------------- */
   const ghCache = {};
+  let projectsList = S.projects.slice();   // replaced by the live pinned list once pinned.json is loaded
+  const ART = ["cinema", "ember", "lime", "ice"];
   function renderProjects() {
     const grid = $("#projectsGrid");
-    grid.innerHTML = S.projects.map((p, i) => {
+    grid.innerHTML = projectsList.map((p, i) => {
       const gh = ghCache[p.repo] || {};
-      const artClass = i % 2 === 0 ? "project__art--cinema" : "project__art--cyber";
+      const artClass = `project__art--${p.art || ART[i % ART.length]}`;
       const visual = p.preview
-        ? `<img src="${p.preview}" alt="${p.title}" loading="lazy">`
-        : `<div class="project__art ${artClass}"></div><div class="project__art-text">${p.title}<small>${p.tag}</small></div>`;
+        ? `<img src="${esc(p.preview)}" alt="${esc(p.title)}" loading="lazy">`
+        : `<div class="project__art ${artClass}"></div><div class="project__art-text">${esc(p.title)}<small>${esc(p.tag)}</small></div>`;
+      const desc = (p.desc && (p.desc[lang] || p.desc.ru)) || gh.desc || t("projects.auto").replace("{lang}", p.lang);
+      const url = (u) => (/^https?:\/\//i.test(u) ? esc(u) : "");
       return `
       <article class="project tilt" data-cursor="view">
         <div class="project__visual">
           ${visual}
-          <span class="project__lang"><i></i>${p.lang}</span>
+          <span class="project__lang"><i></i>${esc(p.lang)}</span>
         </div>
         <div class="project__body">
           <div class="project__top">
-            <h3 class="project__title">${p.title}</h3>
+            <h3 class="project__title">${esc(p.title)}</h3>
             <div class="project__meta">
               <span>★ ${gh.stars ?? "—"}</span>
               ${gh.pushed ? `<span>${t("projects.updated")} ${fmtDate(gh.pushed, lang)}</span>` : ""}
             </div>
           </div>
-          <p class="project__desc">${(gh.desc && !p.desc) ? gh.desc : (p.desc[lang] || p.desc.ru)}</p>
+          <p class="project__desc">${esc(desc)}</p>
           <div class="project__links">
-            ${p.demo ? `<a href="${p.demo}" target="_blank" rel="noopener">${t("projects.demo")} ↗</a>` : ""}
-            <a href="https://github.com/${p.repo}" target="_blank" rel="noopener">${t("projects.code")} ↗</a>
+            ${url(p.demo) ? `<a href="${url(p.demo)}" target="_blank" rel="noopener">${t("projects.demo")} ↗</a>` : ""}
+            <a href="https://github.com/${esc(p.repo)}" target="_blank" rel="noopener">${t("projects.code")} ↗</a>
           </div>
         </div>
         <div class="project__glare"></div>
@@ -373,16 +377,60 @@
     bindCursorTargets(grid);
   }
 
+  // The pinned list: raw.githubusercontent.com is always the latest commit (CORS-enabled), the local copy is the fallback.
+  async function loadPinned() {
+    const cfg = S.pinned || {};
+    const urls = [];
+    if (cfg.source) urls.push(`https://raw.githubusercontent.com/${cfg.source}/${cfg.branch || "master"}/pinned.json`);
+    urls.push("pinned.json");
+    for (const u of urls) {
+      try {
+        const r = await fetch(u, { cache: "no-cache" });
+        if (!r.ok) continue;
+        const list = await r.json();
+        if (Array.isArray(list) && list.length) return list;
+      } catch (e) { /* try the next source */ }
+    }
+    return null;
+  }
+
+  function buildProjects(pinned) {
+    const skip = new Set(((S.pinned && S.pinned.exclude) || []).map((x) => x.toLowerCase()));
+    return pinned.filter((x) => x && x.repo && !skip.has(x.repo.toLowerCase())).map((x) => {
+      const cur = S.projects.find((p) => p.repo.toLowerCase() === x.repo.toLowerCase()) || {};
+      ghCache[x.repo] = { stars: x.stars, pushed: x.pushed, desc: x.description && !/^https?:\/\//i.test(x.description) ? x.description : "" };
+      return {
+        repo: x.repo,
+        title: cur.title || x.name,
+        lang: cur.lang || x.language || "Code",
+        tag: cur.tag || (x.language || "GitHub").toUpperCase(),
+        art: cur.art || ART[Math.abs([...x.name].reduce((h, c) => h * 31 + c.charCodeAt(0), 7)) % ART.length],
+        desc: cur.desc || null,
+        demo: cur.demo || x.homepage || "",
+        preview: cur.preview || null,
+      };
+    });
+  }
+
   async function fetchGitHub() {
     try {
-      const reqs = S.projects.map((p) => fetch(`https://api.github.com/repos/${p.repo}`).then((r) => (r.ok ? r.json() : null)));
+      const pinned = await loadPinned();
+      if (pinned) { const list = buildProjects(pinned); if (list.length) projectsList = list; }
+      renderProjects();
+    } catch (e) { /* keep the static list */ }
+    try {
+      // fresh stars / last update straight from the GitHub API (can be rate limited, then the numbers from pinned.json stay)
       const user = fetch(`https://api.github.com/users/${S.links.github.split("/").pop()}`).then((r) => (r.ok ? r.json() : null));
-      const res = await Promise.all(reqs);
-      res.forEach((j, i) => { if (j) ghCache[S.projects[i].repo] = { stars: j.stargazers_count, pushed: j.pushed_at, desc: j.description }; });
+      const res = await Promise.all(projectsList.map((p) => fetch(`https://api.github.com/repos/${p.repo}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)));
+      res.forEach((j, i) => {
+        if (!j) return;
+        const prev = ghCache[projectsList[i].repo] || {};
+        ghCache[projectsList[i].repo] = { stars: j.stargazers_count, pushed: j.pushed_at, desc: j.description && !/^https?:\/\//i.test(j.description) ? j.description : prev.desc };
+      });
       const u = await user;
       if (u && u.public_repos) $("#repoCount").textContent = u.public_repos;
       renderProjects();
-    } catch (e) { /* offline or rate-limited — keep static */ }
+    } catch (e) { /* offline or rate-limited */ }
   }
 
   /* ---------------------------------------------------------

@@ -16,13 +16,21 @@ window.SITE = {
     email: "shahriyorabrorovtech@gmail.com",
   },
 
-  /* Закреплённые репозитории. desc — по языкам. Звёзды и дата подтягиваются с GitHub автоматически. */
+  /* Закреплённые репозитории берутся с профиля GitHub сами (файл pinned.json обновляет GitHub Actions
+     раз в час). Закрепил новый проект, и он появится на сайте без правок кода.
+     exclude: репозитории, которые не надо показывать (например, сам сайт). */
+  pinned: { source: "Shaha01/Shakhriyor", branch: "master", exclude: ["Shaha01/Shakhriyor"] },
+
+  /* Необязательные «красивые» карточки для отдельных репозиториев: название, теги, описание на трёх языках,
+     демо, превью, вид карточки (art: cinema | cyber | ember | lime | ice). У остальных закреплённых
+     репозиториев всё берётся с GitHub (описание, язык, ссылка на демо). */
   projects: [
     {
       repo: "Shaha01/CiniPhille",
       title: "CiniPhille",
       lang: "Vue",
       tag: "CINEMA",
+      art: "cinema",
       desc: {
         ru: "Веб-проект на Vue.js с живым демо на GitHub Pages.",
         en: "A Vue.js web project with a live demo on GitHub Pages.",
@@ -36,6 +44,7 @@ window.SITE = {
       title: "Cyberpunk 2077",
       lang: "SCSS · Vue",
       tag: "NIGHT CITY",
+      art: "cyber",
       desc: {
         ru: "Лендинг в стилистике Cyberpunk 2077 на Vue и SCSS.",
         en: "A Cyberpunk 2077-styled landing page built with Vue and SCSS.",

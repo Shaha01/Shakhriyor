@@ -52,6 +52,7 @@ window.I18N = {
     "projects.code": "Код",
     "projects.all": "Все репозитории",
     "projects.updated": "Обновлено",
+    "projects.auto": "Проект на {lang}.",
     "projects.repos": "публичных репозиториев",
 
     "app.label": "Приложение",
@@ -193,6 +194,7 @@ window.I18N = {
     "projects.code": "Code",
     "projects.all": "All repositories",
     "projects.updated": "Updated",
+    "projects.auto": "A {lang} project.",
     "projects.repos": "public repositories",
 
     "app.label": "App",
@@ -334,6 +336,7 @@ window.I18N = {
     "projects.code": "Kod",
     "projects.all": "Barcha repozitoriylar",
     "projects.updated": "Yangilangan",
+    "projects.auto": "{lang} loyihasi.",
     "projects.repos": "ochiq repozitoriy",
 
     "app.label": "Ilova",
