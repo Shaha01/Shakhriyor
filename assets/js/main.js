@@ -497,7 +497,28 @@
         <video muted loop playsinline preload="none" poster="media/cs2/${c.id}.webp" data-src="media/cs2/${c.id}.mp4"></video>
       </div>`;
     }).join("");
-    collageIO = autoplayVideos($$(".cell", root), mobile || saveData ? 3 : 5);
+    const cells = $$(".cell", root);
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      // desktop: a clip plays only while the cursor is over it
+      cells.forEach((el) => {
+        const v = el.firstElementChild;
+        el.addEventListener("pointerenter", () => {
+          if (!v.src) {
+            v.addEventListener("loadedmetadata", () => {
+              const d = v.duration;
+              if (d > 6) v.currentTime = Math.random() * Math.min(d - 4, 25);
+            }, { once: true });
+            v.src = v.dataset.src; v.preload = "auto";
+          }
+          v.play().catch(() => {});
+        });
+        el.addEventListener("pointerleave", () => v.pause());
+      });
+      collageIO = { disconnect() {} };
+    } else {
+      // touch screens have no cursor: keep viewport-based autoplay
+      collageIO = autoplayVideos(cells, mobile || saveData ? 3 : 5);
+    }
     if (!collageMQ) {
       collageMQ = window.matchMedia("(max-width: 900px)");
       collageMQ.addEventListener("change", renderCollage);
