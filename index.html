@@ -90,6 +90,7 @@
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
       <a href="#app" data-i18n="nav.app">Приложение</a>
       <a href="#gaming" data-i18n="nav.gaming">Игры</a>
+      <a href="#anime" data-i18n="nav.anime">Аниме</a>
       <a href="#life" data-i18n="nav.life">Жизнь</a>
       <a href="#contact" data-i18n="nav.contact">Контакты</a>
     </nav>
@@ -382,10 +383,41 @@
       </div>
     </section>
 
+    <!-- ============ ANIME ============ -->
+    <section class="section anime" id="anime">
+      <div class="wrap">
+        <div class="sector mono"><span>S6</span><i></i><b data-i18n="anime.label">Аниме</b></div>
+        <div class="section__head">
+          <h2 class="h2 split" data-i18n="anime.title">Аниме-<em>лист.</em></h2>
+          <a class="link-arrow magnetic" href="#" target="_blank" rel="noopener" data-link="anixart">
+            <span data-i18n="anime.profile">Профиль Anixart</span>
+            <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+        <div class="anime__stats reveal" id="animeStats">
+          <div><b data-anime="completed">0</b><span class="mono" data-i18n="anime.completed">тайтлов просмотрено</span></div>
+          <div><b data-anime="episodes">0</b><span class="mono" data-i18n="anime.episodes">серий</span></div>
+          <div><b data-anime="days">0</b><span class="mono" data-i18n="anime.days">дней за экраном</span></div>
+          <div><b data-anime="rated">0</b><span class="mono" data-i18n="anime.rated">франшиз с оценкой</span></div>
+        </div>
+        <div class="anime__bar">
+          <div class="tabs" id="animeTabs" role="tablist">
+            <button role="tab" data-tab="5" class="is-active"><span data-i18n="anime.t5">Шедевры</span> <small class="mono">★5 · <i data-anime-count="5"></i></small></button>
+            <button role="tab" data-tab="4"><span data-i18n="anime.t4">Хорошо</span> <small class="mono">★4 · <i data-anime-count="4"></i></small></button>
+            <button role="tab" data-tab="3"><span data-i18n="anime.t3">Нормально</span> <small class="mono">★3 · <i data-anime-count="3"></i></small></button>
+            <button role="tab" data-tab="2"><span data-i18n="anime.t2">Мимо</span> <small class="mono">★1–2 · <i data-anime-count="2"></i></small></button>
+            <span class="tabs__ink"></span>
+          </div>
+          <p class="mono muted" data-i18n="anime.note">Оценки с Anixart · сезоны одной франшизы объединены</p>
+        </div>
+        <div class="carousel" data-carousel><div class="carousel__track anime__strip" id="animeStrip"></div></div>
+      </div>
+    </section>
+
     <!-- ============ LIFE ============ -->
     <section class="section life" id="life">
       <div class="wrap">
-        <div class="sector mono"><span>S6</span><i></i><b data-i18n="life.label">Жизнь</b></div>
+        <div class="sector mono"><span>S7</span><i></i><b data-i18n="life.label">Жизнь</b></div>
         <div class="section__head">
           <h2 class="h2 split" data-i18n="life.title">Жизнь <em>вне кода.</em></h2>
           <a class="link-arrow magnetic" href="#" target="_blank" rel="noopener" data-link="instagram">
@@ -488,6 +520,7 @@
   <script src="assets/js/tracks.js"></script>
   <script src="assets/js/playlist.js"></script>
   <script src="assets/js/chess.js"></script>
+  <script src="assets/js/anime.js"></script>
   <script src="assets/js/sound.js"></script>
   <script src="assets/js/main.js"></script>
 </body>

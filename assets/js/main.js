@@ -276,6 +276,7 @@
     $$(".lang button").forEach((b) => b.classList.toggle("is-active", b.dataset.lang === l));
     moveLangPill();
     renderProjects();
+    renderAnime();
     renderStats();
     renderNP();
     renderChess();
@@ -906,6 +907,43 @@
   $$("#gtaArt button").forEach((b) => b.addEventListener("click", () => openLightbox(gtaItems, +b.dataset.i)));
 
   /* ---------------------------------------------------------
+     Anime list (assets/js/anime.js, exported from Anixart by tools/anime.py)
+     --------------------------------------------------------- */
+  const AN = window.ANIME || { list: [], stats: {} };
+  const animeTiers = { 5: [5], 4: [4], 3: [3], 2: [2, 1] };
+  let animeTier = "5";
+  {
+    const st = AN.stats, fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const vals = { completed: st.completed, episodes: st.episodes, days: Math.round((st.minutes || 0) / 1440), rated: AN.list.length };
+    $$("[data-anime]").forEach((el) => { el.textContent = fmt(vals[el.dataset.anime] ?? 0); });
+    $$("[data-anime-count]").forEach((el) => { el.textContent = AN.list.filter((a) => animeTiers[el.dataset.animeCount].includes(a.s)).length; });
+  }
+  function animeParts(n) {
+    if (lang !== "ru") return t("anime.parts").replace("{n}", n);
+    const a = n % 10, b = n % 100;
+    return `${n} ${a === 1 && b !== 11 ? "часть" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "части" : "частей"}`;
+  }
+  function renderAnime(reset) {
+    const strip = $("#animeStrip");
+    const list = AN.list.filter((a) => animeTiers[animeTier].includes(a.s));
+    strip.innerHTML = list.map((a) => {
+      const title = esc(lang === "ru" ? a.ru : a.en);
+      return `
+      <article class="ani" data-s="${a.s}">
+        <div class="ani__poster">
+          <img src="media/anime/${a.k}.webp" alt="" loading="lazy" decoding="async" width="300" height="427">
+          <span class="ani__score mono">★ ${a.s}</span>
+          ${a.n > 1 ? `<span class="ani__parts mono">${animeParts(a.n)}</span>` : ""}
+        </div>
+        <h4 class="ani__title" title="${title}">${title}</h4>
+        <p class="ani__year mono">${a.y}</p>
+      </article>`;
+    }).join("");
+    if (strip._carousel) strip._carousel.refresh(reset);
+    if (reset && hasGSAP && !reduced) gsap.from($$(".ani", strip).slice(0, 7), { opacity: 0, x: 60, duration: 0.8, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" });
+  }
+
+  /* ---------------------------------------------------------
      Life: masonry, reels, instagram
      --------------------------------------------------------- */
   const lifeItems = M.life.map(([id]) => ({ type: "img", src: img("photos", id, "l") }));
@@ -1030,6 +1068,7 @@
     moveInk(tabs);
   }
   bindTabs($("#garageTabs"), renderGarage);
+  bindTabs($("#animeTabs"), (key) => { animeTier = key; renderAnime(true); });
   bindTabs($("#lifeTabs"), (key) => {
     $$(".life__panel").forEach((p) => p.classList.toggle("is-active", p.dataset.panel === key));
     if (key === "insta") loadInstagram();
@@ -1583,6 +1622,7 @@
 
   renderCS2();
   renderGarage("fh6");
+  renderAnime();
   $$("[data-carousel]").forEach(initCarousel);
   applyLang(lang);
   fetchGitHub();
@@ -1669,7 +1709,7 @@
     gsap.fromTo(".gaming__tag", { letterSpacing: "0.02em", opacity: 0.2 }, { letterSpacing: "-0.06em", opacity: 1, ease: "none", scrollTrigger: { trigger: ".gaming__tag", start: "top 95%", end: "top 45%", scrub: true } });
 
     // clips / garage strips in
-    ScrollTrigger.batch(".cell, .shot, .reel, .tile", {
+    ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani", {
       start: "top 92%", once: true,
       onEnter: (b) => gsap.from(b, { opacity: 0, y: 40, duration: 0.9, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" }),
     });

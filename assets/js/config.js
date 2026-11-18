@@ -13,6 +13,7 @@ window.SITE = {
     spotifyPlaylist: "0TbHACo5NOmWhRs7Db3Er2", // ID плейлиста из ссылки open.spotify.com/playlist/<ID>
     csstats: "https://csstats.gg/player/76561199409199143",
     chess: "https://www.chess.com/member/shahrikabrorov",
+    anixart: "https://anixart-app.com/profile/2710957",
     email: "shahriyorabrorovtech@gmail.com",
   },
 
