@@ -107,6 +107,91 @@ window.SITE = {
     },
   ],
 
+  /* Самые любимые аниме: показываются отдельным блоком в этом порядке.
+     k — ключ тайтла из assets/js/anime.js (там же постер, годы и оценка), desc — описание на ru/en/uz. */
+  animeFavorites: [
+    { k: "aot", desc: {
+      ru: "Человечество прячется за стенами от титанов-людоедов, пока Эрен не узнаёт, что правда за ними куда страшнее.",
+      en: "Humanity hides behind walls from man-eating titans, until Eren learns the truth beyond them is far darker.",
+      uz: "Insoniyat odamxo'r titanlardan devorlar ortida yashiringan, toki Eren ularning ortidagi haqiqat ancha dahshatliroq ekanini bilmaguncha.",
+    } },
+    { k: "vinland", desc: {
+      ru: "Сага о викингах: Торфинн растёт ради мести, а потом ищет, ради чего вообще стоит жить без войны.",
+      en: "A Viking saga: Thorfinn grows up living for revenge, then searches for a reason to live without war.",
+      uz: "Vikinglar dostoni: Torfinn qasos uchun ulg'ayadi, so'ng urushsiz yashashning ma'nosini izlaydi.",
+    } },
+    { k: "a3020", desc: {
+      ru: "Школьник находит тетрадь, которая убивает любого, чьё имя в неё вписано, и вступает в дуэль умов с детективом L.",
+      en: "A student finds a notebook that kills anyone whose name is written in it and starts a battle of wits with the detective L.",
+      uz: "O'quvchi ismi yozilgan har qanday odamni o'ldiradigan daftarni topadi va detektiv L bilan aql jangini boshlaydi.",
+    } },
+    { k: "jigokuraku", desc: {
+      ru: "Легендарного ниндзя-смертника отправляют на загадочный остров за эликсиром бессмертия в обмен на помилование.",
+      en: "A legendary ninja on death row is sent to a mysterious island for the elixir of life in exchange for a pardon.",
+      uz: "O'limga hukm qilingan afsonaviy ninja afv evaziga mangulik eliksirini topish uchun sirli orolga yuboriladi.",
+    } },
+    { k: "a18244", desc: {
+      ru: "Футбол без прикрас: парень из провинции попадает в академию токийского клуба и учится думать на поле.",
+      en: "Football done right: a kid from the countryside joins a Tokyo club's academy and learns to think on the pitch.",
+      uz: "Haqiqiy futbol: viloyatlik yigit Tokio klubining akademiyasiga tushadi va maydonda fikrlashni o'rganadi.",
+    } },
+    { k: "geass", desc: {
+      ru: "Изгнанный принц получает силу абсолютного приказа и в маске Зеро поднимает восстание против империи.",
+      en: "An exiled prince gains the power of absolute command and, masked as Zero, leads a rebellion against the empire.",
+      uz: "Surgun qilingan shahzoda mutlaq buyruq kuchiga ega bo'ladi va Zero niqobi ostida imperiyaga qarshi qo'zg'olon ko'taradi.",
+    } },
+    { k: "ghoul", desc: {
+      ru: "После нападения гуля студент Канеки становится наполовину монстром и застревает между двумя мирами.",
+      en: "After a ghoul attack, student Kaneki becomes half-monster and gets stuck between two worlds.",
+      uz: "Gul hujumidan so'ng talaba Kaneki yarim maxluqqa aylanadi va ikki dunyo orasida qolib ketadi.",
+    } },
+    { k: "moriarty", desc: {
+      ru: "Шерлок Холмс глазами Мориарти: гениальный преступник против классовой системы викторианской Англии.",
+      en: "Sherlock Holmes from Moriarty's side: a criminal genius taking on the class system of Victorian England.",
+      uz: "Sherlok Xolms Moriarti nigohida: daho jinoyatchi Viktoriya davri Angliyasining tabaqaviy tizimiga qarshi.",
+    } },
+    { k: "a19486", desc: {
+      ru: "Лучший киллер Японии получает приказ целый год прожить обычной жизнью и никого не убивать.",
+      en: "Japan's best hitman is ordered to live an ordinary life for a whole year without killing anyone.",
+      uz: "Yaponiyaning eng zo'r qotiliga butun bir yil oddiy hayot kechirish va hech kimni o'ldirmaslik buyuriladi.",
+    } },
+    { k: "a1788", desc: {
+      ru: "Эпоха сухого закона: парень под чужим именем входит в мафиозную семью, чтобы отомстить за родных.",
+      en: "The Prohibition era: a young man joins a mafia family under a false name to avenge his own.",
+      uz: "Quruq qonun davri: yigit oilasi uchun qasos olish maqsadida soxta ism bilan mafiya oilasiga kiradi.",
+    } },
+    { k: "a1271", desc: {
+      ru: "Деревенский парень приезжает в столицу, видит её гнилую изнанку и вступает в отряд убийц Night Raid.",
+      en: "A village boy comes to the capital, sees its rotten core and joins the assassin group Night Raid.",
+      uz: "Qishloqlik yigit poytaxtga keladi, uning chirigan ichini ko'radi va Night Raid qotillar guruhiga qo'shiladi.",
+    } },
+    { k: "a18606", desc: {
+      ru: "Пятерых друзей втягивают в игру из-за долга в 20 миллионов иен, где главное оружие — недоверие.",
+      en: "Five friends are dragged into a game over a 20-million-yen debt, where distrust is the main weapon.",
+      uz: "Besh do'st 20 million iyenlik qarz sababli o'yinga tortiladi, unda asosiy qurol — ishonchsizlik.",
+    } },
+    { k: "a18849", desc: {
+      ru: "Слабейший охотник на драконов объединяется с самим собой из будущего, чтобы убить сильнейших драконов.",
+      en: "The weakest dragon hunter teams up with his future self to slay the strongest dragons.",
+      uz: "Eng zaif ajdar ovchisi eng kuchli ajdarlarni o'ldirish uchun kelajakdagi o'zi bilan birlashadi.",
+    } },
+    { k: "eminence", desc: {
+      ru: "Парень мечтает быть серым кардиналом в тени и разыгрывает выдуманный заговор, который оказывается настоящим.",
+      en: "A guy who dreams of being the mastermind in the shadows plays out a made-up conspiracy that turns out to be real.",
+      uz: "Soyadagi kulrang kardinal bo'lishni orzu qilgan yigit to'qima fitnani o'ynaydi, u esa haqiqiy bo'lib chiqadi.",
+    } },
+    { k: "naruto", desc: {
+      ru: "Ниндзя-изгой с демоном-лисом внутри идёт к мечте стать Хокаге и заслужить признание деревни.",
+      en: "An outcast ninja with a fox demon sealed inside chases his dream of becoming Hokage and earning the village's respect.",
+      uz: "Ichida tulki-iblis muhrlangan quvg'in ninja Hokage bo'lish va qishloq e'tirofini qozonish orzusiga intiladi.",
+    } },
+    { k: "bluelock", desc: {
+      ru: "300 нападающих заперты в проекте, который должен вырастить самого эгоистичного форварда в мире.",
+      en: "300 strikers are locked into a project built to create the world's most egotistical forward.",
+      uz: "300 hujumchi dunyodagi eng xudbin forvardni yetishtirish uchun tuzilgan loyihaga qamaladi.",
+    } },
+  ],
+
   /* Статистика CS2. csstats.gg не отдаёт данные автоматически — впиши цифры вручную.
      Оставь null, чтобы скрыть показатель. */
   cs2Stats: {

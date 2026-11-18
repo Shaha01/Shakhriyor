@@ -277,6 +277,7 @@
     moveLangPill();
     renderProjects();
     renderAnime();
+    renderAnimeFavs();
     renderStats();
     renderNP();
     renderChess();
@@ -922,6 +923,23 @@
     if (lang !== "ru") return t("anime.parts").replace("{n}", n);
     const a = n % 10, b = n % 100;
     return `${n} ${a === 1 && b !== 11 ? "часть" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "части" : "частей"}`;
+  }
+  function renderAnimeFavs() {
+    const byKey = Object.fromEntries(AN.list.map((a) => [a.k, a]));
+    $("#animeFavs").innerHTML = (S.animeFavorites || []).filter((f) => byKey[f.k]).map((f, i) => {
+      const a = byKey[f.k], title = esc(lang === "ru" ? a.ru : a.en);
+      const meta = [a.y, a.n > 1 ? animeParts(a.n) : ""].filter(Boolean).join(" · ");
+      return `
+      <li class="fav">
+        <div class="fav__poster"><img src="media/anime/${a.k}.webp" alt="" loading="lazy" decoding="async" width="300" height="427"></div>
+        <div class="fav__body">
+          <span class="fav__n mono">${String(i + 1).padStart(2, "0")}</span>
+          <h4 class="fav__title">${title}</h4>
+          <p class="fav__meta mono">${meta}</p>
+          <p class="fav__desc">${esc(f.desc[lang] || f.desc.ru)}</p>
+        </div>
+      </li>`;
+    }).join("");
   }
   function renderAnime(reset) {
     const strip = $("#animeStrip");
@@ -1709,7 +1727,7 @@
     gsap.fromTo(".gaming__tag", { letterSpacing: "0.02em", opacity: 0.2 }, { letterSpacing: "-0.06em", opacity: 1, ease: "none", scrollTrigger: { trigger: ".gaming__tag", start: "top 95%", end: "top 45%", scrub: true } });
 
     // clips / garage strips in
-    ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani", {
+    ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani, .fav", {
       start: "top 92%", once: true,
       onEnter: (b) => gsap.from(b, { opacity: 0, y: 40, duration: 0.9, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" }),
     });

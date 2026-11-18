@@ -125,6 +125,9 @@ window.I18N = {
     "anime.t4": "Хорошо",
     "anime.t3": "Нормально",
     "anime.t2": "Мимо",
+    "anime.favTitle": "Самые <em>любимые</em>",
+    "anime.favSub": "То, что советую всем",
+    "anime.allTitle": "Все <em>оценки</em>",
     "anime.note": "Оценки с Anixart · сезоны одной франшизы объединены",
     "anime.parts": "{n} частей",
 
@@ -282,6 +285,9 @@ window.I18N = {
     "anime.t4": "Good",
     "anime.t3": "Okay",
     "anime.t2": "Not for me",
+    "anime.favTitle": "All-time <em>favourites</em>",
+    "anime.favSub": "The ones I recommend to everyone",
+    "anime.allTitle": "All <em>ratings</em>",
     "anime.note": "Ratings from Anixart · seasons of one franchise are merged",
     "anime.parts": "{n} parts",
 
@@ -439,6 +445,9 @@ window.I18N = {
     "anime.t4": "Yaxshi",
     "anime.t3": "O'rtacha",
     "anime.t2": "Menga emas",
+    "anime.favTitle": "Eng <em>sevimlilar</em>",
+    "anime.favSub": "Hammaga tavsiya qiladiganlarim",
+    "anime.allTitle": "Barcha <em>baholar</em>",
     "anime.note": "Baholar Anixart'dan · bitta franshiza fasllari birlashtirilgan",
     "anime.parts": "{n} qism",
 
