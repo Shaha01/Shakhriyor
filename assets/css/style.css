@@ -352,7 +352,7 @@ em { font-style: normal; color: var(--neon); }
 .project:hover .project__art-text { transform: scale(1.06) translateZ(30px); }
 .project__art--cyber + .project__art-text { color: #0a0a0d; text-shadow: 4px 4px 0 #00f0ff; }
 .project__art-text small { display: block; font-family: var(--f-mono); font-size: 11px; letter-spacing: .3em; font-weight: 400; margin-top: 12px; opacity: .7; }
-.project__lang { position: absolute; top: 16px; left: 16px; z-index: 2; padding: 6px 10px; border-radius: 6px; background: rgba(0,0,0,.65); backdrop-filter: blur(6px); font-family: var(--f-mono); font-size: 11px; display: flex; align-items: center; gap: 6px; }
+.project__lang { position: absolute; top: 16px; right: 16px; z-index: 2; padding: 6px 10px; border-radius: 6px; background: rgba(0,0,0,.65); backdrop-filter: blur(6px); font-family: var(--f-mono); font-size: 11px; display: flex; align-items: center; gap: 6px; }
 .project__lang i { width: 8px; height: 8px; border-radius: 50%; background: #41b883; }
 .project__body { padding: 24px 26px 26px; display: grid; gap: 12px; }
 .project__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
