@@ -33,7 +33,7 @@ window.SITE = {
         uz: "Vue 3 + Pinia'da TMDB jonli ma'lumotlari bilan kino katalogi: filmlar va seriallar, qidiruv, treylerlar, aktyorlar, tez kunda va sevimlilar. RU/EN.",
       },
       demo: "https://shaha01.github.io/CiniPhille",
-      preview: "media/projects/ciniphille.svg",
+      preview: "media/projects/ciniphille.webp",
     },
     {
       repo: "Shaha01/Cyberpunk2077-VUE",
@@ -47,7 +47,7 @@ window.SITE = {
         uz: "Vue'da Cyberpunk 2077 fan-landingi: neyrointerfeys yuklanish ekrani, lor, Night City tumanlari, personajlar, xronologiya va Phantom Liberty. RU/EN/UZ.",
       },
       demo: "https://shaha01.github.io/Cyberpunk2077-VUE/",
-      preview: "media/projects/cyberpunk.svg",
+      preview: "media/projects/cyberpunk.webp",
     },
     {
       repo: "Shaha01/PingPong",
@@ -61,7 +61,7 @@ window.SITE = {
         uz: "Canvas'da F1 uslubidagi ping-pong: chiroqlar bo'yicha start, kompyuterga qarshi, bitta klaviaturada ikki kishi yoki PeerJS orqali onlayn. 15 ochkogacha.",
       },
       demo: "https://shaha01.github.io/PingPong",
-      preview: "media/projects/pingpong.svg",
+      preview: "media/projects/pingpong.webp",
     },
     {
       repo: "Shaha01/Weather-VUE",
@@ -75,7 +75,7 @@ window.SITE = {
         uz: "Vue va OpenWeather'da real vaqtdagi ob-havo: geolokatsiya va shahar qidiruvi, mahalliy vaqt, soatlik va 8 kunlik prognoz, yomg'ir, qor va momaqaldiroqning jonli effektlari. °C/°F, RU/EN.",
       },
       demo: "https://shaha01.github.io/Weather-VUE/",
-      preview: "media/projects/weather.svg",
+      preview: "media/projects/weather.webp",
     },
     {
       repo: "Shaha01/F1-Maps",
@@ -89,7 +89,7 @@ window.SITE = {
         uz: "Three.js'da Formula-1 trassalari 3D'da: 2026 mavsumining barcha avtodromlari haqiqiy relyef bilan, telemetriyali aylana simulyatsiyasi (tezlik, uzatma, gaz/tormoz), orbita/quvish/onbord kameralari va balandlik profili. RU/EN/UZ.",
       },
       demo: "https://shaha01.github.io/F1-Maps/",
-      preview: "media/projects/f1-maps.svg",
+      preview: "media/projects/f1-maps.webp",
     },
     {
       repo: "Monarch-IT-Team/monarch-portfolio",
@@ -103,7 +103,7 @@ window.SITE = {
         uz: "Monarch IT jamoaviy loyihasi: Astro, TypeScript va o'z shaderlari bilan Three.js'da sayt-vizitka. Aylantirganda kamera yulduzdan butun koinotgacha uzoqlashadi, generativ ovoz, terminal va GitHub'dan olinadigan loyihalar bor. UZ/RU/EN.",
       },
       demo: "https://monarch-it-team.github.io/monarch-portfolio/",
-      preview: "media/projects/monarch.svg",
+      preview: "media/projects/monarch.webp",
     },
   ],
 

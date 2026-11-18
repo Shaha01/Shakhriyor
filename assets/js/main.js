@@ -900,7 +900,7 @@
     $$(".shot", strip).forEach((el) => el.addEventListener("click", () => openLightbox(items, +el.dataset.i)));
     bindCursorTargets(strip);
     if (strip._carousel) strip._carousel.refresh(true);
-    if (hasGSAP && !reduced) gsap.from($$(".shot", strip).slice(0, 4), { opacity: 0, x: 60, duration: 0.8, stagger: 0.06, ease: "expo.out", clearProps: "transform,opacity" });
+    if (hasGSAP && !reduced) gsap.from($$(".shot:not([data-clone])", strip).slice(0, 4), { opacity: 0, x: 60, duration: 0.8, stagger: 0.06, ease: "expo.out", clearProps: "transform,opacity" });
   }
 
   const gtaItems = M.gta.map(([id]) => ({ type: "img", src: img("photos", id, "l") }));
@@ -926,20 +926,23 @@
   }
   function renderAnimeFavs() {
     const byKey = Object.fromEntries(AN.list.map((a) => [a.k, a]));
-    $("#animeFavs").innerHTML = (S.animeFavorites || []).filter((f) => byKey[f.k]).map((f, i) => {
-      const a = byKey[f.k], title = esc(lang === "ru" ? a.ru : a.en);
+    const track = $("#animeFavs");
+    track.innerHTML = (S.animeFavorites || []).filter((f) => byKey[f.k]).map((f, i) => {
+      const a = byKey[f.k], title = esc(lang === "ru" ? a.ru : a.en), n = String(i + 1).padStart(2, "0");
       const meta = [a.y, a.n > 1 ? animeParts(a.n) : ""].filter(Boolean).join(" · ");
       return `
-      <li class="fav">
-        <div class="fav__poster"><img src="media/anime/${a.k}.webp" alt="" loading="lazy" decoding="async" width="300" height="427"></div>
-        <div class="fav__body">
-          <span class="fav__n mono">${String(i + 1).padStart(2, "0")}</span>
-          <h4 class="fav__title">${title}</h4>
-          <p class="fav__meta mono">${meta}</p>
-          <p class="fav__desc">${esc(f.desc[lang] || f.desc.ru)}</p>
+      <article class="fban">
+        <img class="fban__bg" src="media/anime/banner-${a.k}.webp" alt="" loading="lazy" decoding="async" width="1400" height="620">
+        <span class="fban__num" aria-hidden="true">${n}</span>
+        <div class="fban__poster"><img src="media/anime/${a.k}.webp" alt="" loading="lazy" decoding="async" width="300" height="427"></div>
+        <div class="fban__body">
+          <p class="fban__meta mono"><b>${n}</b> · ${meta}</p>
+          <h4 class="fban__title">${title}</h4>
+          <p class="fban__desc">${esc(f.desc[lang] || f.desc.ru)}</p>
         </div>
-      </li>`;
+      </article>`;
     }).join("");
+    if (track._carousel) track._carousel.refresh();
   }
   function renderAnime(reset) {
     const strip = $("#animeStrip");
@@ -958,7 +961,7 @@
       </article>`;
     }).join("");
     if (strip._carousel) strip._carousel.refresh(reset);
-    if (reset && hasGSAP && !reduced) gsap.from($$(".ani", strip).slice(0, 7), { opacity: 0, x: 60, duration: 0.8, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" });
+    if (reset && hasGSAP && !reduced) gsap.from($$(".ani:not([data-clone])", strip).slice(0, 7), { opacity: 0, x: 60, duration: 0.8, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" });
   }
 
   /* ---------------------------------------------------------
@@ -1528,27 +1531,73 @@
         <button class="rbtn" data-dir="1" aria-label="Next">${ARROW_R}</button>
       </div>`);
     const count = $(".carousel__count", root), bar = $(".carousel__bar i", root);
-    const prev = $('[data-dir="-1"]', root), next = $('[data-dir="1"]', root);
     const pad = (n) => String(n).padStart(2, "0");
-    function update() {
-      const items = track.children, n = items.length;
-      const max = track.scrollWidth - track.clientWidth;
-      const x = track.scrollLeft;
-      const padL = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
-      let idx = 0;
-      for (let i = 0; i < n; i++) { if (items[i].offsetLeft + items[i].offsetWidth / 2 >= x + padL) { idx = i; break; } }
-      if (max > 0 && x >= max - 2) idx = n - 1;
-      count.innerHTML = `<b>${pad(n ? idx + 1 : 0)}</b> / ${pad(n)}`;
-      const w = Math.max(8, Math.min(100, (track.clientWidth / Math.max(1, track.scrollWidth)) * 100));
-      const p = max > 0 ? x / max : 0;
-      bar.style.width = `${w}%`;
-      bar.style.left = `${p * (100 - w)}%`;
-      prev.disabled = x <= 2;
-      next.disabled = max <= 2 || x >= max - 2;
+
+    // Infinite loop: the real items are surrounded by copies of themselves and the scroll position is kept
+    // inside the middle copy, so in either direction there is always something to show.
+    let N = 0, before = 0, looped = false, idleT = 0;
+    const padLeft = () => parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+    const lowBound = () => (looped ? track.children[N * before].offsetLeft - padLeft() : 0);
+    const setW = () => (looped ? track.children[N * (before + 1)].offsetLeft - track.children[N * before].offsetLeft : 0);
+    function build() {
+      $$("[data-clone]", track).forEach((c) => c.remove());
+      const real = [...track.children];
+      N = real.length; before = 0; looped = false;
+      if (N < 2) return;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const w = real[N - 1].offsetLeft + real[N - 1].offsetWidth - real[0].offsetLeft + gap;
+      before = Math.max(1, Math.ceil(track.clientWidth / Math.max(w, 1)));
+      const copy = () => real.map((el) => {
+        const c = el.cloneNode(true);
+        c.dataset.clone = "1";
+        c.setAttribute("aria-hidden", "true");
+        if (c.matches("button, a")) c.tabIndex = -1;
+        $$("button, a", c).forEach((x) => { x.tabIndex = -1; });
+        return c;
+      });
+      for (let i = 0; i < before; i++) { track.prepend(...copy()); track.append(...copy()); }
+      looped = true;
     }
-    [prev, next].forEach((b) => b.addEventListener("click", () => track.scrollBy({ left: +b.dataset.dir * track.clientWidth * 0.8, behavior: "smooth" })));
-    track.addEventListener("scroll", update, { passive: true });
-    addEventListener("resize", update);
+    function jump(x) {
+      track.style.scrollSnapType = "none";
+      track.scrollLeft = x;
+      requestAnimationFrame(() => { track.style.scrollSnapType = ""; });
+    }
+    // the same position inside the middle copy; the small epsilon keeps a rounded-off snap point at the very end
+    // of the middle copy from counting as "still inside"
+    const wrapPos = (x) => {
+      const w = setW(), lo = lowBound();
+      return w < 50 ? x : lo + ((((x - lo + 4) % w) + w) % w) - 4;
+    };
+    function normalize() {
+      if (!looped) return;
+      const x = track.scrollLeft, nx = wrapPos(x);
+      if (Math.abs(nx - x) > 1) jump(nx);
+    }
+    function update() {
+      const it = track.children, n = N || it.length;
+      const x = track.scrollLeft, pl = padLeft();
+      let idx = 0;
+      for (let i = 0; i < it.length; i++) { if (it[i].offsetLeft + it[i].offsetWidth / 2 >= x + pl) { idx = i; break; } }
+      idx = n ? idx % n : 0;
+      count.innerHTML = `<b>${pad(n ? idx + 1 : 0)}</b> / ${pad(n)}`;
+      const w = setW();
+      if (!w) return;
+      const bw = Math.max(8, Math.min(100, (track.clientWidth / w) * 100));
+      const p = ((((x - lowBound()) % w) + w) % w) / w;
+      bar.style.width = `${bw}%`;
+      bar.style.left = `${p * (100 - bw)}%`;
+    }
+    $$("[data-dir]", root).forEach((b) => b.addEventListener("click", () => track.scrollBy({ left: +b.dataset.dir * track.clientWidth * 0.8, behavior: "smooth" })));
+    track.addEventListener("scroll", () => {
+      update();
+      clearTimeout(idleT);
+      idleT = setTimeout(() => { if (!down) normalize(); }, 160);
+    }, { passive: true });
+    addEventListener("resize", () => {
+      if (looped && Math.ceil(track.clientWidth / Math.max(setW(), 1)) > before) { build(); toStart(); }
+      update();
+    });
 
     // mouse drag
     let down = false, moved = false, sx = 0, sl = 0;
@@ -1571,24 +1620,18 @@
       }
     });
     track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    track.addEventListener("click", (e) => {
+      const c = e.target.closest("[data-clone]");
+      if (!c || c.parentElement !== track) return;
+      track.children[N * before + ([...track.children].indexOf(c) % N)].click();
+    });
 
-    // start on the 2nd item so the 1st one already bleeds past the left edge
-    function toStart() {
-      const items = track.children;
-      if (items.length < 3) { track.scrollLeft = 0; return; }
-      const padL = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
-      // first item whose predecessors overflow the left margin → something always crosses the screen edge
-      let k = 1;
-      while (k < items.length - 2 && items[k].offsetLeft - items[0].offsetLeft <= padL) k++;
-      track.style.scrollSnapType = "none";
-      track.scrollLeft = items[k].offsetLeft - padL;
-      requestAnimationFrame(() => { track.style.scrollSnapType = ""; });
-    }
-    // Autoplay: a slow drift that turns around at both ends. It pauses while the pointer is over the
+    function toStart() { jump(lowBound()); }
+    // Autoplay: a slow endless drift from right to left. It pauses while the pointer is over the
     // strip, while it is touched / dragged / used with the arrows, when the tab is hidden, and when off screen.
     if (!reduced) {
       const SPEED = 46; // px per second
-      let pos = 0, dir = 1, last = 0, raf = 0, paused = false, hovering = false, visible = false, resumeT = 0;
+      let pos = 0, last = 0, raf = 0, paused = false, hovering = false, visible = false, resumeT = 0;
       const pauseFor = (ms) => {
         paused = true; last = 0;
         track.classList.remove("is-auto");
@@ -1598,15 +1641,14 @@
       const frame = (t) => {
         raf = 0;
         if (!visible || document.hidden) { last = 0; return; }
-        const max = track.scrollWidth - track.clientWidth;
-        if (!paused && !hovering && !down && max > 4) {
+        if (looped && !paused && !hovering && !down) {
           if (!last) pos = track.scrollLeft;
           const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
           last = t;
           track.classList.add("is-auto");
           if (Math.abs(track.scrollLeft - pos) > 1.5) pos = track.scrollLeft; // moved by something else, e.g. a tab switch
-          pos += dir * SPEED * dt;
-          if (pos >= max) { pos = max; dir = -1; } else if (pos <= 0) { pos = 0; dir = 1; }
+          pos += SPEED * dt;
+          pos = wrapPos(pos);
           track.scrollLeft = pos;
         } else {
           last = 0;
@@ -1628,19 +1670,21 @@
       }
     }
 
-    const api = { refresh(reset) { if (reset) toStart(); update(); } };
+    const api = { refresh(reset) { if (reset || !looped || !track.querySelector("[data-clone]")) { build(); toStart(); } update(); } };
     root._carousel = track._carousel = api;
+    build();
     toStart();
     update();
     let touched = false;
     track.addEventListener("pointerdown", () => { touched = true; }, { once: true });
-    addEventListener("load", () => { if (!touched) { toStart(); update(); } }, { once: true });
+    addEventListener("load", () => { if (!touched) { build(); toStart(); update(); } }, { once: true });
     return api;
   }
 
   renderCS2();
   renderGarage("fh6");
   renderAnime();
+  renderAnimeFavs();
   $$("[data-carousel]").forEach(initCarousel);
   applyLang(lang);
   fetchGitHub();
@@ -1727,7 +1771,7 @@
     gsap.fromTo(".gaming__tag", { letterSpacing: "0.02em", opacity: 0.2 }, { letterSpacing: "-0.06em", opacity: 1, ease: "none", scrollTrigger: { trigger: ".gaming__tag", start: "top 95%", end: "top 45%", scrub: true } });
 
     // clips / garage strips in
-    ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani, .fav", {
+    ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani, .fban", {
       start: "top 92%", once: true,
       onEnter: (b) => gsap.from(b, { opacity: 0, y: 40, duration: 0.9, stagger: 0.05, ease: "expo.out", clearProps: "transform,opacity" }),
     });
