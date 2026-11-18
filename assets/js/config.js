@@ -23,7 +23,8 @@ window.SITE = {
 
   /* Необязательные «красивые» карточки для отдельных репозиториев: название, теги, описание на трёх языках,
      демо, превью, вид карточки (art: cinema | cyber | ember | lime | ice). У остальных закреплённых
-     репозиториев всё берётся с GitHub (описание, язык, ссылка на демо). */
+     репозиториев всё берётся с GitHub (описание, язык, ссылка на демо).
+     always: true — показывать карточку, даже если репозиторий не закреплён (GitHub даёт закрепить максимум 6). */
   projects: [
     {
       repo: "Shaha01/CiniPhille",
@@ -80,6 +81,36 @@ window.SITE = {
       },
       demo: "https://shaha01.github.io/Weather-VUE/",
       preview: "media/projects/weather.webp",
+    },
+    {
+      repo: "Shaha01/F1-Maps",
+      title: "F1 Maps",
+      lang: "JavaScript · Three.js",
+      tag: "3D CIRCUITS",
+      art: "ember",
+      always: true,
+      desc: {
+        ru: "3D-трассы Формулы-1 на Three.js: все автодромы сезона 2026 с реальным рельефом, симуляция круга с телеметрией (скорость, передача, газ/тормоз), камеры орбита/погоня/онборд и профиль высот. RU/EN/UZ.",
+        en: "Formula 1 circuits in 3D on Three.js: every 2026 track with real elevation, a simulated lap with telemetry (speed, gear, throttle/brake), orbit/chase/onboard cameras and an elevation profile. RU/EN/UZ.",
+        uz: "Three.js'da Formula-1 trassalari 3D'da: 2026 mavsumining barcha avtodromlari haqiqiy relyef bilan, telemetriyali aylana simulyatsiyasi (tezlik, uzatma, gaz/tormoz), orbita/quvish/onbord kameralari va balandlik profili. RU/EN/UZ.",
+      },
+      demo: "https://shaha01.github.io/F1-Maps/",
+      preview: "media/projects/f1-maps.webp",
+    },
+    {
+      repo: "Monarch-IT-Team/monarch-portfolio",
+      title: "Monexarch",
+      lang: "Astro · Three.js",
+      tag: "TEAM · MONARCH IT",
+      art: "lime",
+      always: true,
+      desc: {
+        ru: "Командный проект Monarch IT: сайт-визитка на Astro, TypeScript и Three.js со своими шейдерами. При прокрутке камера отдаляется от звезды до вселенной, есть генеративный звук, терминал и проекты, которые подтягиваются с GitHub. UZ/RU/EN.",
+        en: "A Monarch IT team project: a portfolio site on Astro, TypeScript and Three.js with custom shaders. Scrolling pulls the camera out from a star to the whole universe, with generative sound, a terminal and projects pulled from GitHub. UZ/RU/EN.",
+        uz: "Monarch IT jamoaviy loyihasi: Astro, TypeScript va o'z shaderlari bilan Three.js'da sayt-vizitka. Aylantirganda kamera yulduzdan butun koinotgacha uzoqlashadi, generativ ovoz, terminal va GitHub'dan olinadigan loyihalar bor. UZ/RU/EN.",
+      },
+      demo: "https://monarch-it-team.github.io/monarch-portfolio/",
+      preview: "media/projects/monarch.webp",
     },
   ],
 

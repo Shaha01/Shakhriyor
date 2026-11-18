@@ -396,7 +396,11 @@
 
   function buildProjects(pinned) {
     const skip = new Set(((S.pinned && S.pinned.exclude) || []).map((x) => x.toLowerCase()));
-    return pinned.filter((x) => x && x.repo && !skip.has(x.repo.toLowerCase())).map((x) => {
+    const live = pinned.filter((x) => x && x.repo && !skip.has(x.repo.toLowerCase()));
+    const seen = new Set(live.map((x) => x.repo.toLowerCase()));
+    // cards marked `always` stay on the site even when the repo is not pinned
+    const extra = S.projects.filter((p) => p.always && !seen.has(p.repo.toLowerCase()));
+    return live.map((x) => {
       const cur = S.projects.find((p) => p.repo.toLowerCase() === x.repo.toLowerCase()) || {};
       ghCache[x.repo] = { stars: x.stars, pushed: x.pushed, desc: x.description && !/^https?:\/\//i.test(x.description) ? x.description : "" };
       return {
@@ -409,7 +413,7 @@
         demo: cur.demo || x.homepage || "",
         preview: cur.preview || null,
       };
-    });
+    }).concat(extra);
   }
 
   async function fetchGitHub() {
