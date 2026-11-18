@@ -1,12 +1,14 @@
 /* ==========================================================
    ABROROV SHAHRIYOR — main.js
+   One script for both pages: index.html (work) and life.html (personal).
+   Every block checks that its markup is on the current page.
    ========================================================== */
 (() => {
   "use strict";
 
   const S = window.SITE;
   const T = window.I18N;
-  const M = window.MEDIA;
+  const M = window.MEDIA || {};
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const hasGSAP = typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
@@ -151,13 +153,15 @@
     else { pendingIdx = i; loadSpotify(); }
   }
 
-  $("#npPlay").dataset.sfx = "radio";
-  $("#npPlay").addEventListener("click", () => {
-    if (np.idx < 0) return playIndex(0);
-    if (spCtl) spCtl.togglePlay();
-  });
-  $("#npPrev").addEventListener("click", () => playIndex(np.idx < 0 ? 0 : np.pos > 4000 ? np.idx : np.idx - 1));
-  $("#npNext").addEventListener("click", () => playIndex(np.idx + 1));
+  if ($("#np")) {
+    $("#npPlay").dataset.sfx = "radio";
+    $("#npPlay").addEventListener("click", () => {
+      if (np.idx < 0) return playIndex(0);
+      if (spCtl) spCtl.togglePlay();
+    });
+    $("#npPrev").addEventListener("click", () => playIndex(np.idx < 0 ? 0 : np.pos > 4000 ? np.idx : np.idx - 1));
+    $("#npNext").addEventListener("click", () => playIndex(np.idx + 1));
+  }
 
   function onPlayback(d) {
     if (np.idx < 0 && d.isPaused) return; // embed reporting its preloaded track — stay idle
@@ -261,7 +265,7 @@
     lang = l;
     store.set("lang", l);
     document.documentElement.lang = l;
-    document.title = t("meta.title");
+    document.title = t(document.body.dataset.title || "meta.title");
     $$("[data-i18n]").forEach((el) => {
       el.innerHTML = t(el.dataset.i18n);
       if (el.classList.contains("split")) splitWords(el);
@@ -273,6 +277,7 @@
     $$("[data-age]").forEach((el) => { el.textContent = l === "ru" ? ruYears(age) : t("age.unit").replace("{n}", age); });
     $$("[data-age-num]").forEach((el) => { el.textContent = age; });
 
+    $$("[data-cv]").forEach((a) => { a.href = (S.cv && (S.cv[l] || S.cv.en)) || "#"; });
     $$(".lang button").forEach((b) => b.classList.toggle("is-active", b.dataset.lang === l));
     moveLangPill();
     renderProjects();
@@ -318,7 +323,7 @@
     SFX.onChange(syncSound);
   }
   // Elements that open the lightbox get the "open" sound from openLightbox()
-  const SFX_SKIP = ".shot, .tile, .gta__art, #lbPrev, #lbNext, #lbClose, #loader";
+  const SFX_SKIP = ".shot, .tile, #lbPrev, #lbNext, #lbClose, #loader";
   document.addEventListener("click", (e) => {
     const el = e.target.closest("a, button, [role=tab]");
     if (!el || el.closest(SFX_SKIP)) return;
@@ -339,13 +344,14 @@
   /* ---------------------------------------------------------
      Projects
      --------------------------------------------------------- */
-  const ghCache = {};
+  const GH = window.GITHUB || { repos: {} };
   const projectsList = S.projects.slice();   // the list is curated by hand in config.js
   const ART = ["cinema", "ember", "lime", "ice"];
   function renderProjects() {
     const grid = $("#projectsGrid");
+    if (!grid) return;
     grid.innerHTML = projectsList.map((p, i) => {
-      const gh = ghCache[p.repo] || {};
+      const gh = GH.repos[p.repo] || {};
       const artClass = `project__art--${p.art || ART[i % ART.length]}`;
       const visual = p.preview
         ? `<img src="${esc(p.preview)}" alt="${esc(p.title)}" loading="lazy">`
@@ -379,26 +385,13 @@
     bindCursorTargets(grid);
   }
 
-  async function fetchGitHub() {
-    try {
-      // stars / last update straight from the GitHub API (can be rate limited, then the cards just show "—")
-      const user = fetch(`https://api.github.com/users/${S.links.github.split("/").pop()}`).then((r) => (r.ok ? r.json() : null));
-      const res = await Promise.all(projectsList.map((p) => fetch(`https://api.github.com/repos/${p.repo}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)));
-      res.forEach((j, i) => {
-        if (!j) return;
-        const prev = ghCache[projectsList[i].repo] || {};
-        ghCache[projectsList[i].repo] = { stars: j.stargazers_count, pushed: j.pushed_at, desc: j.description && !/^https?:\/\//i.test(j.description) ? j.description : prev.desc };
-      });
-      const u = await user;
-      if (u && u.public_repos) $("#repoCount").textContent = u.public_repos;
-      renderProjects();
-    } catch (e) { /* offline or rate-limited */ }
-  }
+  if ($("#repoCount") && GH.user && GH.user.public_repos) $("#repoCount").textContent = GH.user.public_repos;
 
   /* ---------------------------------------------------------
      CS2
      --------------------------------------------------------- */
   function renderCS2() {
+    if (!$("#clipCount")) return;
     $("#clipCount").textContent = M.cs2.length;
     renderCollage();
   }
@@ -531,6 +524,7 @@
   function renderStats() {
     const st = S.cs2Stats || {};
     const box = $("#cs2Stats");
+    if (!box) return;
     // numbers from config.js (if filled in) show as tiny chips; the link is always a small button
     const chip = (k, v, suf = "") => (v === null || v === undefined || v === "") ? "" :
       `<span class="chip chip--stat">${t("cs2." + k)} <b>${typeof v === "number" ? v.toLocaleString("en-US").replace(/,/g, " ") : v}${suf}</b></span>`;
@@ -880,11 +874,11 @@
   }
 
   /* ---------------------------------------------------------
-     Games chips, garage, GTA
+     Games chips, garage
      --------------------------------------------------------- */
-  $("#gamesChips").innerHTML = S.games.map((g) => `<span class="chip">${g}</span>`).join("");
+  if ($("#gamesChips")) $("#gamesChips").innerHTML = S.games.map((g) => `<span class="chip">${g}</span>`).join("");
 
-  const garageSets = {
+  const garageSets = !M.fh6 ? {} : {
     fh6: M.fh6.map(([id, w, h]) => ({ id, w, h, folder: "forza" })),
     fh5: M.fh5.map(([id, w, h]) => ({ id, w, h, folder: "forza" })),
     nfs: M.nfs.map(([id, w, h]) => ({ id, w, h, folder: "nfs" })),
@@ -892,6 +886,7 @@
   function renderGarage(key) {
     const set = garageSets[key];
     const strip = $("#garageStrip");
+    if (!strip) return;
     const items = set.map((s) => ({ type: "img", src: img(s.folder, s.id, "l") }));
     strip.innerHTML = set.map((s, i) => `
       <button class="shot" data-i="${i}" data-cursor="view" aria-label="Screenshot ${i + 1}">
@@ -903,9 +898,6 @@
     if (hasGSAP && !reduced) gsap.from($$(".shot:not([data-clone])", strip).slice(0, 4), { opacity: 0, x: 60, duration: 0.8, stagger: 0.06, ease: "expo.out", clearProps: "transform,opacity" });
   }
 
-  const gtaItems = M.gta.map(([id]) => ({ type: "img", src: img("photos", id, "l") }));
-  $("#gtaArt").innerHTML = M.gta.map(([id], i) => `<button data-i="${i}" data-cursor="view" aria-label="GTA art ${i + 1}"><img src="${img("photos", id, "l")}" alt="" loading="lazy" decoding="async"></button>`).join("");
-  $$("#gtaArt button").forEach((b) => b.addEventListener("click", () => openLightbox(gtaItems, +b.dataset.i)));
 
   /* ---------------------------------------------------------
      Anime list (assets/js/anime.js, exported from Anixart by tools/anime.py)
@@ -927,6 +919,7 @@
   function renderAnimeFavs() {
     const byKey = Object.fromEntries(AN.list.map((a) => [a.k, a]));
     const track = $("#animeFavs");
+    if (!track) return;
     track.innerHTML = (S.animeFavorites || []).filter((f) => byKey[f.k]).map((f, i) => {
       const a = byKey[f.k], title = esc(lang === "ru" ? a.ru : a.en), n = String(i + 1).padStart(2, "0");
       const meta = [a.y, a.n > 1 ? animeParts(a.n) : ""].filter(Boolean).join(" · ");
@@ -946,6 +939,7 @@
   }
   function renderAnime(reset) {
     const strip = $("#animeStrip");
+    if (!strip) return;
     const list = AN.list.filter((a) => animeTiers[animeTier].includes(a.s));
     strip.innerHTML = list.map((a) => {
       const title = esc(lang === "ru" ? a.ru : a.en);
@@ -967,12 +961,14 @@
   /* ---------------------------------------------------------
      Life: masonry, reels, instagram
      --------------------------------------------------------- */
+  if ($("#lifeMasonry")) {
   const lifeItems = M.life.map(([id]) => ({ type: "img", src: img("photos", id, "l") }));
   $("#lifeMasonry").innerHTML = M.life.map(([id, w, h], i) => `
     <button class="tile" data-i="${i}" data-cursor="view" aria-label="Photo ${i + 1}">
       <img src="${img("photos", id, "s")}" srcset="${img("photos", id, "s")} 760w, ${img("photos", id, "l")} 2000w" sizes="(max-width: 600px) 70vw, 32vw" alt="" loading="lazy" decoding="async" width="${w}" height="${h}">
     </button>`).join("");
   $$("#lifeMasonry .tile").forEach((el) => el.addEventListener("click", () => openLightbox(lifeItems, +el.dataset.i)));
+  }
 
   /* F1 track silhouettes as section backgrounds.
      section id → [[track key, top %, left %, width, lap seconds, run colour?], ...]
@@ -1011,6 +1007,14 @@
       ["montreal", 76, 40, "clamp(180px, 24vw, 360px)", 9],
       ["bahrain", 88, 4, "clamp(140px, 17vw, 260px)", 11],
     ],
+    anime: [
+      ["zandvoort", 4, 80, "clamp(160px, 20vw, 300px)", 12],
+      ["baku", 70, -5, "clamp(200px, 26vw, 400px)", 15],
+    ],
+    music: [
+      ["yas", 4, 76, "clamp(160px, 20vw, 300px)", 11, YELLOW],
+      ["losail", 58, -4, "clamp(140px, 17vw, 260px)", 10],
+    ],
     contact: [
       ["yas", 2, 74, "clamp(180px, 22vw, 340px)", 11, YELLOW],
       ["losail", 48, -4, "clamp(150px, 18vw, 280px)", 10],
@@ -1039,9 +1043,11 @@
   }
 
   // videos in "Life": same idea as the CS2 mosaic, they just play, no player
-  $("#reelsGrid").innerHTML = M.reels.map((id) => `
+  if ($("#reelsGrid")) {
+    $("#reelsGrid").innerHTML = M.reels.map((id) => `
     <div class="reel"><video muted loop playsinline preload="none" poster="media/reels/${id}.webp" data-src="media/reels/${id}.mp4"></video></div>`).join("");
-  autoplayVideos($$("#reelsGrid .reel"), 3);
+    autoplayVideos($$("#reelsGrid .reel"), 3);
+  }
 
   let instaLoaded = false;
   function loadInstagram() {
@@ -1080,6 +1086,7 @@
     ink.style.transform = `translate(${a.offsetLeft}px, ${a.offsetTop - 4}px)`;
   }
   function bindTabs(tabs, onChange) {
+    if (!tabs) return;
     $$("button", tabs).forEach((b) => { b.dataset.sfx = "tab"; });
     $$("button", tabs).forEach((b) => b.addEventListener("click", () => {
       $$("button", tabs).forEach((x) => { x.classList.toggle("is-active", x === b); x.setAttribute("aria-selected", x === b); });
@@ -1127,6 +1134,7 @@
     lenis && lenis.start();
   }
   const step = (d) => { lbIndex = (lbIndex + d + lbItems.length) % lbItems.length; SFX.play("whoosh", d); showLb(); };
+  if (lb) {
   $("#lbClose").addEventListener("click", closeLightbox);
   $("#lbPrev").addEventListener("click", () => step(-1));
   $("#lbNext").addEventListener("click", () => step(1));
@@ -1145,13 +1153,14 @@
     if (Math.abs(dx) > 50 && lbItems.length > 1) step(dx < 0 ? 1 : -1);
     tx = null;
   });
+  }
 
   /* ---------------------------------------------------------
      Kanatobi phone mock
      --------------------------------------------------------- */
   const KANA = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソ";
   const rain = $("#kanaRain");
-  if (!reduced) {
+  if (!reduced && rain) {
     for (let i = 0; i < 28; i++) {
       const s = document.createElement("span");
       s.textContent = KANA[Math.floor(Math.random() * KANA.length)];
@@ -1180,13 +1189,13 @@
         .to("#kanaCard", { rotateY: 0, duration: 0.5, ease: "back.out(2)" });
     } else apply();
   }
-  if (!reduced) setInterval(nextKana, 2600);
+  if (!reduced && $("#kanaCard")) setInterval(nextKana, 2600);
 
   /* ---------------------------------------------------------
      Copy email
      --------------------------------------------------------- */
-  $("#copyEmail").dataset.sfx = "none";
-  $("#copyEmail").addEventListener("click", async (e) => {
+  if ($("#copyEmail")) $("#copyEmail").dataset.sfx = "none";
+  if ($("#copyEmail")) $("#copyEmail").addEventListener("click", async (e) => {
     const b = e.currentTarget;
     try { await navigator.clipboard.writeText(S.links.email); }
     catch (err) {
@@ -1337,7 +1346,7 @@
     });
 
     const big = $(".contact__big");
-    big.addEventListener("mousemove", (e) => {
+    if (big) big.addEventListener("mousemove", (e) => {
       const r = big.getBoundingClientRect();
       big.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
       big.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
@@ -1478,10 +1487,10 @@
      Gauge (F1 RPM)
      --------------------------------------------------------- */
   const gaugeFill = $("#gaugeFill");
-  const gLen = gaugeFill.getTotalLength();
-  gaugeFill.style.strokeDasharray = gLen;
-  gaugeFill.style.strokeDashoffset = gLen;
-  (function buildTicks() {
+  const gLen = gaugeFill ? gaugeFill.getTotalLength() : 0;
+  if (gaugeFill) (function buildTicks() {
+    gaugeFill.style.strokeDasharray = gLen;
+    gaugeFill.style.strokeDashoffset = gLen;
     const cx = 150, cy = 161.9, a0 = 151, sweep = 238, max = 15;
     let html = "";
     for (let i = 0; i <= max; i++) {
@@ -1495,6 +1504,7 @@
   })();
   const shift = $$("#shiftLights i");
   function setRPM(p) {
+    if (!gaugeFill) return;
     gaugeFill.style.strokeDashoffset = gLen * (1 - p);
     $("#rpmValue").textContent = (p * 15).toFixed(1);
     const on = Math.round(p * 11);
@@ -1504,7 +1514,7 @@
   }
   setRPM(0);
   const gaugeState = { p: 0 };
-  $(".f1__gauge").addEventListener("click", () => {
+  if ($(".f1__gauge")) $(".f1__gauge").addEventListener("click", () => {
     SFX.play("rev");
     if (!hasGSAP) return;
     gsap.timeline()
@@ -1688,13 +1698,12 @@
   renderAnimeFavs();
   $$("[data-carousel]").forEach(initCarousel);
   applyLang(lang);
-  fetchGitHub();
 
   /* ---------------------------------------------------------
      No GSAP fallback
      --------------------------------------------------------- */
   if (!hasGSAP) {
-    $("#loader").remove();
+    if ($("#loader")) $("#loader").remove();
     document.body.classList.remove("is-loading");
     setRPM(0.86);
     addEventListener("scroll", () => onScroll(scrollY), { passive: true });
@@ -1739,7 +1748,7 @@
       start: "top 90%", once: true,
       onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.07, ease: "expo.out", overwrite: true }),
     });
-    ScrollTrigger.create({
+    if ($("#projectsGrid")) ScrollTrigger.create({
       trigger: "#projectsGrid", start: "top 88%", once: true,
       onEnter: () => gsap.from($$("#projectsGrid .project"), { opacity: 0, y: 70, duration: 1.2, stagger: 0.12, ease: "expo.out", clearProps: "opacity,transform" }),
     });
@@ -1752,11 +1761,14 @@
     });
 
     // hero parallax
+    if ($(".hero")) {
     gsap.to(".hero__photo img", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
     gsap.to(".hero__text", { y: -80, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero", start: "20% top", end: "bottom top", scrub: true } });
     gsap.to(".hero__glow", { xPercent: -20, yPercent: 30, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    }
 
     // F1 big text + gauge
+    if ($(".f1")) {
     gsap.fromTo(".f1__bigtext", { xPercent: 10 }, { xPercent: -30, ease: "none", scrollTrigger: { trigger: ".f1", start: "top bottom", end: "bottom top", scrub: true } });
     gsap.fromTo(".f1__livery i", { xPercent: -30 }, { xPercent: 30, ease: "none", stagger: 0.1, scrollTrigger: { trigger: ".f1", start: "top bottom", end: "bottom top", scrub: true } });
     gsap.to(gaugeState, {
@@ -1764,12 +1776,13 @@
       scrollTrigger: { trigger: ".f1__gauge", start: "top 85%", end: "center 45%", scrub: 0.6 },
       onUpdate: () => setRPM(gaugeState.p),
     });
+    }
 
     // phone float
-    gsap.fromTo(".phone", { rotateY: -18, rotateX: 8, y: 60 }, { rotateY: 8, rotateX: -4, y: -40, ease: "none", scrollTrigger: { trigger: ".app", start: "top bottom", end: "bottom top", scrub: true } });
+    if ($(".phone")) gsap.fromTo(".phone", { rotateY: -18, rotateX: 8, y: 60 }, { rotateY: 8, rotateX: -4, y: -40, ease: "none", scrollTrigger: { trigger: ".app", start: "top bottom", end: "bottom top", scrub: true } });
 
     // gaming tag
-    gsap.fromTo(".gaming__tag", { letterSpacing: "0.02em", opacity: 0.2 }, { letterSpacing: "-0.06em", opacity: 1, ease: "none", scrollTrigger: { trigger: ".gaming__tag", start: "top 95%", end: "top 45%", scrub: true } });
+    if ($(".gaming__tag")) gsap.fromTo(".gaming__tag", { letterSpacing: "0.02em", opacity: 0.2 }, { letterSpacing: "-0.06em", opacity: 1, ease: "none", scrollTrigger: { trigger: ".gaming__tag", start: "top 95%", end: "top 45%", scrub: true } });
 
     // clips / garage strips in
     ScrollTrigger.batch(".cell, .shot, .reel, .tile, .ani, .fban", {
@@ -1784,7 +1797,7 @@
     });
 
     // contact title
-    gsap.fromTo(".checker", { backgroundPositionX: "0px" }, { backgroundPositionX: "360px", ease: "none", scrollTrigger: { trigger: ".contact", start: "top bottom", end: "bottom bottom", scrub: true } });
+    if ($(".checker")) gsap.fromTo(".checker", { backgroundPositionX: "0px" }, { backgroundPositionX: "360px", ease: "none", scrollTrigger: { trigger: ".contact", start: "top bottom", end: "bottom bottom", scrub: true } });
 
     // active nav link
     $$("main section[id]").forEach((sec) => {
@@ -1802,6 +1815,7 @@
      --------------------------------------------------------- */
   function heroIntro() {
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    if (!$(".hero")) return tl.from(".nav", { yPercent: -100, duration: 1, clearProps: "transform" });
     tl.from(".hero__name .word", { yPercent: 110, duration: 1.4, stagger: 0.1 })
       .from(".hero__kicker", { opacity: 0, x: -30, duration: 1 }, "-=1.1")
       .from(".hero__photo", { clipPath: "inset(100% 0 0 0)", duration: 1.6, ease: "expo.inOut", clearProps: "clipPath" }, "-=1.4")
@@ -1816,6 +1830,14 @@
 
   function runLoader() {
     const loader = $("#loader");
+    if (!loader) {
+      document.body.classList.remove("is-loading");
+      lenis && lenis.start();
+      heroIntro();
+      initScroll();
+      ScrollTrigger.refresh();
+      return;
+    }
     const lights = $$(".light", loader);
     const fast = reduced || sessionStorageSafe("seenLoader");
     let done = false, started = false, launched = false, tl = null;

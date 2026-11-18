@@ -17,6 +17,13 @@ window.SITE = {
     email: "shahriyorabrorovtech@gmail.com",
   },
 
+  /* Резюме (PDF): собираются из этого файла командой node tools/cv/build.mjs */
+  cv: {
+    ru: "media/cv/Abrorov_Shahriyor_CV_RU.pdf",
+    en: "media/cv/Abrorov_Shahriyor_CV_EN.pdf",
+    uz: "media/cv/Abrorov_Shahriyor_CV_UZ.pdf",
+  },
+
   /* Проекты добавляются вручную: карточки показываются в том порядке, в котором записаны.
      Поля: repo (владелец/имя на GitHub), title, lang, tag, art (запасной фон без превью: cinema | cyber | ember | lime | ice),
      desc (ru/en/uz), demo (ссылка на live demo), preview (картинка/анимированный SVG 16:10 из media/projects). */

@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abrorov Shahriyor — Создан для высшей лиги</title>
-  <meta name="description" content="Abrorov Shahriyor — FullStack-разработчик, студент TSUE, фанат Формулы-1. Проекты, приложение Kanatobi, хайлайты CS2 и фото.">
+  <title>Abrorov Shahriyor — Full Stack-разработчик</title>
+  <meta name="description" content="Abrorov Shahriyor — Full Stack-разработчик, изучаю AI и ML, студент TSUE. Проекты на Vue и Three.js, приложение Kanatobi, резюме.">
   <meta name="theme-color" content="#050506">
-  <meta property="og:title" content="Abrorov Shahriyor — Built for the top league">
-  <meta property="og:description" content="FullStack developer · TSUE student · F1 fan">
+  <meta property="og:title" content="Abrorov Shahriyor — Full Stack developer">
+  <meta property="og:description" content="Full Stack developer · learning AI & ML · TSUE student">
   <meta property="og:image" content="media/photos/022-l.webp">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050506'/%3E%3Ctext x='32' y='38' font-family='Arial Black,Arial' font-weight='900' font-size='21' text-anchor='middle' fill='%23ffffff' transform='skewX(-8) translate(5 0)'%3ESHA%3C/text%3E%3Crect x='14' y='45' width='12' height='5' rx='1' fill='%23ff2a3d'/%3E%3Crect x='27' y='45' width='12' height='5' rx='1' fill='%23ffd400'/%3E%3Crect x='40' y='45' width='12' height='5' rx='1' fill='%232b4cff'/%3E%3C/svg%3E">
@@ -15,9 +15,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="media/photos/022-l.webp">
-  <link rel="stylesheet" href="assets/css/style.css?v=341304db">
+  <link rel="stylesheet" href="assets/css/style.css?v=3745c47e">
 </head>
-<body class="is-loading">
+<body class="is-loading" data-title="meta.title">
+  <noscript>
+    <div class="noscript wrap">
+      <p><b>Abrorov Shahriyor</b> — Full Stack developer · AI / ML · TSUE.</p>
+      <p>This site needs JavaScript for projects and animations. Contacts: <a href="mailto:shahriyorabrorovtech@gmail.com">shahriyorabrorovtech@gmail.com</a> · <a href="https://github.com/Shaha01">GitHub</a> · <a href="https://t.me/shakhriyorabrorov">Telegram</a> · <a href="media/cv/Abrorov_Shahriyor_CV_EN.pdf">CV (PDF)</a></p>
+    </div>
+  </noscript>
 
   <!-- ============ LOADER: F1 START LIGHTS ============ -->
   <div class="loader" id="loader" aria-hidden="true">
@@ -85,14 +91,11 @@
       <span class="nav__live"><i></i>LIVE</span>
     </a>
     <nav class="nav__links" id="navLinks">
-      <a href="#about" data-i18n="nav.about">Обо мне</a>
-      <a href="#f1" data-i18n="nav.f1">F1</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
       <a href="#app" data-i18n="nav.app">Приложение</a>
-      <a href="#gaming" data-i18n="nav.gaming">Игры</a>
-      <a href="#anime" data-i18n="nav.anime">Аниме</a>
-      <a href="#life" data-i18n="nav.life">Жизнь</a>
+      <a href="#about" data-i18n="nav.about">Обо мне</a>
       <a href="#contact" data-i18n="nav.contact">Контакты</a>
+      <a href="life.html" class="nav__out" data-i18n="nav.personal">Личное ↗</a>
     </nav>
     <div class="nav__right">
       <button class="sound" id="soundToggle" type="button" aria-label="Sound" aria-pressed="true"><i></i><i></i><i></i><i></i></button>
@@ -117,7 +120,7 @@
 
       <div class="hero__inner wrap">
         <div class="hero__text">
-          <p class="hero__kicker mono" data-i18n="hero.kicker">FullStack-разработчик · Студент TSUE · Узбекистан</p>
+          <p class="hero__kicker mono" data-i18n="hero.kicker">Full Stack-разработчик · AI / ML · Студент TSUE</p>
           <h1 class="hero__name">
             <span class="line"><span class="word">ABROROV</span></span>
             <span class="line"><span class="word word--outline">SHAHRIYOR</span></span>
@@ -126,6 +129,7 @@
           <div class="hero__ctas">
             <a href="#projects" class="btn btn--primary magnetic"><span data-i18n="hero.cta1">Смотреть проекты</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             <a href="#contact" class="btn btn--ghost magnetic"><span data-i18n="hero.cta2">Связаться</span></a>
+            <a href="media/cv/Abrorov_Shahriyor_CV_RU.pdf" data-cv target="_blank" rel="noopener" class="btn btn--ghost magnetic"><span data-i18n="hero.cv">Резюме PDF</span></a>
           </div>
         </div>
 
@@ -141,90 +145,24 @@
       <div class="telemetry wrap mono">
         <div class="telemetry__item"><span data-i18n="hero.age">Возраст</span><b data-age-num>19</b></div>
         <div class="telemetry__item"><span>Uni</span><b>TSUE '25</b></div>
-        <div class="telemetry__item"><span>Stack</span><b>PY · JS · VUE</b></div>
+        <div class="telemetry__item"><span>Stack</span><b>JS · VUE · PY · AI/ML</b></div>
         <div class="telemetry__item"><span data-i18n="hero.status">Статус</span><b class="pulse" data-i18n="hero.statusValue">Строю будущее</b></div>
-        <a href="#about" class="telemetry__scroll"><span data-i18n="hero.scroll">Скролль</span><i></i></a>
+        <a href="#projects" class="telemetry__scroll"><span data-i18n="hero.scroll">Скролль</span><i></i></a>
       </div>
     </section>
 
     <!-- ============ MARQUEE ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>SPEED</span><b>✦</b><span>PRECISION</span><b>✦</b><span>FULLSTACK</span><b>✦</b><span>FORMULA 1</span><b>✦</b><span>AI</span><b>✦</b><span>NO COMPROMISE</span><b>✦</b>
-        <span>SPEED</span><b>✦</b><span>PRECISION</span><b>✦</b><span>FULLSTACK</span><b>✦</b><span>FORMULA 1</span><b>✦</b><span>AI</span><b>✦</b><span>NO COMPROMISE</span><b>✦</b>
+        <span>SPEED</span><b>✦</b><span>PRECISION</span><b>✦</b><span>FULL STACK</span><b>✦</b><span>FORMULA 1</span><b>✦</b><span>AI / ML</span><b>✦</b><span>NO COMPROMISE</span><b>✦</b>
+        <span>SPEED</span><b>✦</b><span>PRECISION</span><b>✦</b><span>FULL STACK</span><b>✦</b><span>FORMULA 1</span><b>✦</b><span>AI / ML</span><b>✦</b><span>NO COMPROMISE</span><b>✦</b>
       </div>
     </div>
-
-    <!-- ============ ABOUT ============ -->
-    <section class="section about" id="about">
-      <div class="wrap">
-        <div class="sector mono"><span>S1</span><i></i><b data-i18n="about.label">Обо мне</b></div>
-        <div class="about__grid">
-          <div class="about__photo reveal-img" data-cursor="view">
-            <img src="media/photos/015-l.webp" alt="" loading="lazy" decoding="async">
-          </div>
-          <div class="about__content">
-            <h2 class="h2 split" data-i18n="about.title">Код, скорость <em>и амбиции.</em></h2>
-            <div class="about__text">
-              <p class="reveal" data-i18n="about.p1"></p>
-              <p class="reveal" data-i18n="about.p2"></p>
-              <p class="reveal" data-i18n="about.p3"></p>
-            </div>
-            <div class="facts">
-              <div class="fact reveal"><span class="mono" data-i18n="about.f.age">Возраст</span><b data-age>19</b></div>
-              <div class="fact reveal"><span class="mono" data-i18n="about.f.uni">Университет</span><b data-i18n="about.f.uniValue">TSUE · с 2025</b></div>
-              <div class="fact reveal"><span class="mono" data-i18n="about.f.stack">Стек</span><b>Python · JS · Vue · AI</b></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ F1 ============ -->
-    <section class="section f1" id="f1">
-      <div class="f1__livery" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="f1__bigtext" aria-hidden="true">VERSTAPPEN</div>
-      <div class="wrap">
-        <div class="sector mono"><span>S2</span><i></i><b data-i18n="f1.label">Pit Wall</b></div>
-        <div class="f1__grid">
-          <div class="f1__content">
-            <h2 class="h2 split" data-i18n="f1.title">Формула-1 — это не хобби. <em>Это образ мышления.</em></h2>
-            <p class="lead reveal" data-i18n="f1.text"></p>
-            <div class="pitwall">
-              <div class="pitwall__row reveal"><span class="mono" data-i18n="f1.team">Команда</span><b>Oracle Red Bull Racing</b><i class="pitwall__dot pitwall__dot--rb"></i></div>
-              <div class="pitwall__row reveal"><span class="mono" data-i18n="f1.driver">Пилот</span><b>Max Verstappen</b><i class="pitwall__dot pitwall__dot--y"></i></div>
-              <div class="pitwall__row reveal"><span class="mono" data-i18n="f1.game">В игре</span><b>F1 Manager</b><i class="pitwall__dot"></i></div>
-              <div class="pitwall__row reveal"><span class="mono" data-i18n="f1.mode">Режим</span><b data-i18n="f1.modeValue">Push to the limit</b><i class="pitwall__dot pitwall__dot--g"></i></div>
-            </div>
-          </div>
-          <div class="f1__gauge reveal">
-            <svg viewBox="0 0 300 300" class="gauge" aria-hidden="true">
-              <defs>
-                <linearGradient id="gaugeGrad" x1="0" x2="1" y1="0" y2="0">
-                  <stop offset="0" stop-color="#2b4cff"/>
-                  <stop offset=".6" stop-color="#ffd400"/>
-                  <stop offset="1" stop-color="#ff2a3d"/>
-                </linearGradient>
-              </defs>
-              <path class="gauge__track" d="M 45 220 A 120 120 0 1 1 255 220"/>
-              <path class="gauge__fill" id="gaugeFill" d="M 45 220 A 120 120 0 1 1 255 220"/>
-              <g class="gauge__ticks" id="gaugeTicks"></g>
-            </svg>
-            <div class="gauge__readout">
-              <b id="rpmValue">0</b>
-              <span class="mono">RPM × 1000</span>
-              <em class="mono" data-i18n="f1.rpm">Обороты мотивации</em>
-            </div>
-            <div class="gauge__shift" id="shiftLights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ============ PROJECTS ============ -->
     <section class="section projects" id="projects">
       <div class="wrap">
-        <div class="sector mono"><span>S3</span><i></i><b data-i18n="projects.label">Проекты</b></div>
+        <div class="sector mono"><span>S1</span><i></i><b data-i18n="projects.label">Проекты</b></div>
         <div class="section__head">
           <h2 class="h2 split" data-i18n="projects.title">Избранные <em>проекты.</em></h2>
           <a class="link-arrow magnetic" href="https://github.com/Shaha01" target="_blank" rel="noopener" data-link="github">
@@ -239,7 +177,7 @@
     <!-- ============ APP ============ -->
     <section class="section app" id="app">
       <div class="wrap">
-        <div class="sector mono"><span>S4</span><i></i><b data-i18n="app.label">Приложение</b></div>
+        <div class="sector mono"><span>S2</span><i></i><b data-i18n="app.label">Приложение</b></div>
         <div class="app__grid">
           <div class="app__content">
             <p class="app__status mono reveal"><i></i><span data-i18n="app.status">Закрытое тестирование</span></p>
@@ -282,169 +220,28 @@
       </div>
     </section>
 
-    <!-- ============ GAMING ============ -->
-    <section class="section gaming" id="gaming">
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
       <div class="wrap">
-        <div class="sector mono"><span>S5</span><i></i><b data-i18n="gaming.label">Игровой режим</b></div>
-        <div class="gaming__head">
-          <p class="gaming__pre" data-i18n="gaming.title">Вне кода я —</p>
-          <h2 class="gaming__tag glitch" data-text="SHAHRIK">SHAHRIK</h2>
-          <div class="gaming__meta">
-            <div class="chips" id="gamesChips"></div>
-            <a href="#" class="link-arrow magnetic" target="_blank" rel="noopener" data-link="steam">
-              <svg class="ico" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.16l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.61.56L2.4 15.22A10 10 0 1 0 12 2zm-4.6 15.12-1.22-.5a2.13 2.13 0 1 0 1.17-2.92l1.27.52a1.57 1.57 0 1 1-1.22 2.9zm9.29-7.82a2.51 2.51 0 1 0-2.5 2.51 2.51 2.51 0 0 0 2.5-2.5zm-4.4 0a1.89 1.89 0 1 1 1.9 1.89 1.89 1.89 0 0 1-1.9-1.9z"/></svg>
-              <span data-i18n="gaming.steam">Профиль Steam</span>
-              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
-            </a>
+        <div class="sector mono"><span>S3</span><i></i><b data-i18n="about.label">Обо мне</b></div>
+        <div class="about__grid">
+          <div class="about__photo reveal-img" data-cursor="view">
+            <img src="media/photos/015-l.webp" alt="" loading="lazy" decoding="async">
           </div>
-        </div>
-
-        <!-- CS2 -->
-        <div class="block cs2">
-          <div class="block__head">
-            <h3 class="h3" data-i18n="cs2.title">Хайлайты <em>CS2</em></h3>
-            <div class="cs2__meta">
-              <p class="mono muted"><b id="clipCount">16</b> <span data-i18n="cs2.clips">клипов</span></p>
-              <div class="cs2__stats" id="cs2Stats"></div>
+          <div class="about__content">
+            <h2 class="h2 split" data-i18n="about.title">Код, скорость <em>и амбиции.</em></h2>
+            <div class="about__text">
+              <p class="reveal" data-i18n="about.p1"></p>
+              <p class="reveal" data-i18n="about.p2"></p>
+              <p class="reveal" data-i18n="about.p3"></p>
             </div>
-          </div>
-          <div class="collage" id="cs2Clips"></div>
-        </div>
-
-        <!-- Garage -->
-        <div class="block garage">
-          <div class="block__head">
-            <h3 class="h3" data-i18n="garage.title">Гараж</h3>
-            <p class="mono muted" data-i18n="garage.sub">Фоторежим: Forza Horizon и Need for Speed</p>
-          </div>
-          <div class="tabs" id="garageTabs" role="tablist">
-            <button role="tab" data-tab="fh6" class="is-active">Forza Horizon 6</button>
-            <button role="tab" data-tab="fh5">Forza Horizon 5</button>
-            <button role="tab" data-tab="nfs">NFS Hot Pursuit</button>
-            <span class="tabs__ink"></span>
-          </div>
-          <div class="carousel" data-carousel><div class="carousel__track garage__strip" id="garageStrip"></div></div>
-        </div>
-
-        <!-- Chess -->
-        <div class="block chess" id="chess">
-          <div class="block__head">
-            <h3 class="h3" data-i18n="chess.title">Шахматы на <em>Chess.com</em></h3>
-            <p class="mono muted" data-i18n="chess.sub">Повторы побед · данные в реальном времени</p>
-          </div>
-          <div class="chess__grid">
-            <div class="chess__stage">
-              <div class="chess__player chess__player--top" id="chessTop"></div>
-              <div class="board" id="chessBoard" aria-label="Chess board">
-                <div class="board__squares"></div>
-                <div class="board__marks"></div>
-                <div class="board__pieces"></div>
-                <div class="board__flag mono" id="chessFlag"></div>
-              </div>
-              <div class="chess__player chess__player--bottom" id="chessBottom"></div>
-              <div class="chess__ctl">
-                <button class="rbtn" data-act="start" aria-label="Start"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
-                <button class="rbtn" data-act="prev" aria-label="Previous move"><svg viewBox="0 0 24 24"><path d="M16 5v14L5 12z"/></svg></button>
-                <button class="rbtn rbtn--play" data-act="play" aria-label="Play"><svg viewBox="0 0 24 24"><path class="i-play" d="M7 4v16l13-8z"/><path class="i-pause" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
-                <button class="rbtn" data-act="next" data-sfx="none" aria-label="Next move"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-                <button class="rbtn" data-act="end" aria-label="End"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
-                <div class="chess__move">
-                  <b class="mono" id="chessSan">—</b>
-                  <div class="chess__bar" id="chessBar"><i></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="chess__side">
-              <div class="chess__panel">
-                <h4 class="chess__h"><span data-i18n="chess.ratings">Рейтинг</span> <a class="mono" href="#" target="_blank" rel="noopener" data-link="chess" id="chessUser">@shahrikabrorov</a></h4>
-                <div class="chess__ratings" id="chessRatings"></div>
-                <div class="chess__record" id="chessRecord"></div>
-              </div>
-              <div class="chess__panel chess__panel--wins">
-                <h4 class="chess__h"><span data-i18n="chess.wins">Победы</span> <span class="mono muted" id="chessWinsCount"></span></h4>
-                <div class="chess__wins-box"><ol class="chess__wins" id="chessWins" data-lenis-prevent></ol></div>
-              </div>
-              <a class="link-arrow" href="#" target="_blank" rel="noopener" data-link="chess"><span data-i18n="chess.profile">Профиль на Chess.com</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+            <div class="facts">
+              <div class="fact reveal"><span class="mono" data-i18n="about.f.age">Возраст</span><b data-age>19</b></div>
+              <div class="fact reveal"><span class="mono" data-i18n="about.f.uni">Университет</span><b data-i18n="about.f.uniValue">TSUE · с 2025</b></div>
+              <div class="fact reveal"><span class="mono" data-i18n="about.f.stack">Стек</span><b>JavaScript · Vue · Python · AI/ML</b></div>
             </div>
           </div>
         </div>
-
-        <!-- GTA -->
-        <div class="block gta">
-          <div class="gta__card">
-            <div class="gta__art" id="gtaArt"></div>
-            <div class="gta__content">
-              <span class="gta__soon mono" data-i18n="gta.soon">Скоро</span>
-              <h3 class="gta__title">GTA <em>V</em></h3>
-              <p data-i18n="gta.text">Скриншоты из Лос-Сантоса уже в пути. А пока — арт из Вайнвуда.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ ANIME ============ -->
-    <section class="section anime" id="anime">
-      <div class="wrap">
-        <div class="sector mono"><span>S6</span><i></i><b data-i18n="anime.label">Аниме</b></div>
-        <div class="section__head">
-          <h2 class="h2 split" data-i18n="anime.title">Аниме-<em>лист.</em></h2>
-          <a class="link-arrow magnetic" href="#" target="_blank" rel="noopener" data-link="anixart">
-            <span data-i18n="anime.profile">Профиль Anixart</span>
-            <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
-          </a>
-        </div>
-        <div class="anime__stats reveal" id="animeStats">
-          <div><b data-anime="completed">0</b><span class="mono" data-i18n="anime.completed">тайтлов просмотрено</span></div>
-          <div><b data-anime="episodes">0</b><span class="mono" data-i18n="anime.episodes">серий</span></div>
-          <div><b data-anime="days">0</b><span class="mono" data-i18n="anime.days">дней за экраном</span></div>
-          <div><b data-anime="rated">0</b><span class="mono" data-i18n="anime.rated">франшиз с оценкой</span></div>
-        </div>
-        <div class="anime__favs">
-          <div class="block__head">
-            <h3 class="h3" data-i18n="anime.favTitle">Самые <em>любимые</em></h3>
-            <p class="mono muted" data-i18n="anime.favSub">То, что советую всем</p>
-          </div>
-          <div class="carousel" data-carousel><div class="carousel__track favs" id="animeFavs"></div></div>
-        </div>
-        <div class="block__head anime__all">
-          <h3 class="h3" data-i18n="anime.allTitle">Все <em>оценки</em></h3>
-        </div>
-        <div class="anime__bar">
-          <div class="tabs" id="animeTabs" role="tablist">
-            <button role="tab" data-tab="5" class="is-active"><span data-i18n="anime.t5">Шедевры</span> <small class="mono">★5 · <i data-anime-count="5"></i></small></button>
-            <button role="tab" data-tab="4"><span data-i18n="anime.t4">Хорошо</span> <small class="mono">★4 · <i data-anime-count="4"></i></small></button>
-            <button role="tab" data-tab="3"><span data-i18n="anime.t3">Нормально</span> <small class="mono">★3 · <i data-anime-count="3"></i></small></button>
-            <button role="tab" data-tab="2"><span data-i18n="anime.t2">Мимо</span> <small class="mono">★1–2 · <i data-anime-count="2"></i></small></button>
-            <span class="tabs__ink"></span>
-          </div>
-          <p class="mono muted" data-i18n="anime.note">Оценки с Anixart · сезоны одной франшизы объединены</p>
-        </div>
-        <div class="carousel" data-carousel><div class="carousel__track anime__strip" id="animeStrip"></div></div>
-      </div>
-    </section>
-
-    <!-- ============ LIFE ============ -->
-    <section class="section life" id="life">
-      <div class="wrap">
-        <div class="sector mono"><span>S7</span><i></i><b data-i18n="life.label">Жизнь</b></div>
-        <div class="section__head">
-          <h2 class="h2 split" data-i18n="life.title">Жизнь <em>вне кода.</em></h2>
-          <a class="link-arrow magnetic" href="#" target="_blank" rel="noopener" data-link="instagram">
-            <svg class="ico" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.7a5.1 5.1 0 1 0 0 10.2 5.1 5.1 0 0 0 0-10.2zm0 8.4a3.3 3.3 0 1 1 0-6.6 3.3 3.3 0 0 1 0 6.6zm5.3-9.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>
-            <span>@shahriyor_abrorov</span>
-            <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
-          </a>
-        </div>
-        <div class="tabs" id="lifeTabs" role="tablist">
-          <button role="tab" data-tab="photos" class="is-active" data-i18n="life.photos">Фото</button>
-          <button role="tab" data-tab="reels" data-i18n="life.reels">Видео</button>
-          <button role="tab" data-tab="insta" data-i18n="life.insta">Посты Instagram</button>
-          <span class="tabs__ink"></span>
-        </div>
-        <div class="life__panel is-active" data-panel="photos"><div class="carousel" data-carousel><div class="carousel__track life__strip" id="lifeMasonry"></div></div></div>
-        <div class="life__panel" data-panel="reels"><div class="reels" id="reelsGrid"></div></div>
-        <div class="life__panel" data-panel="insta"><div class="insta" id="instaGrid"><p class="mono muted" data-i18n="life.instaLoading">Загружаю посты…</p></div></div>
       </div>
     </section>
 
@@ -467,71 +264,38 @@
           <div class="socials">
             <a href="#" target="_blank" rel="noopener" data-link="instagram" class="social magnetic"><span>Instagram</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
             <a href="#" target="_blank" rel="noopener" data-link="github" class="social magnetic"><span>GitHub</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-            <a href="#" target="_blank" rel="noopener" data-link="steam" class="social magnetic"><span>Steam</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
             <a href="#" target="_blank" rel="noopener" data-link="telegram" class="social magnetic"><span>Telegram</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+            <a href="media/cv/Abrorov_Shahriyor_CV_RU.pdf" target="_blank" rel="noopener" data-cv class="social magnetic"><span data-i18n="hero.cv">Резюме PDF</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
           </div>
 
-          <div class="radio" id="np">
-            <div class="radio__head mono">
-              <span class="radio__badge"><i></i>TEAM RADIO</span>
-              <span>SHA <b style="color:var(--neon)">↔</b> PIT WALL</span>
-              <span id="npCount"></span>
-              <a class="link-arrow" href="#" target="_blank" rel="noopener" data-link="spotify"><span>Spotify</span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-            </div>
-            <div class="radio__body">
-              <div class="radio__now">
-                <div class="radio__main">
-                  <div class="radio__cover"><img id="npCover" alt=""></div>
-                  <div class="radio__meta">
-                    <span class="mono radio__state" id="npState"></span>
-                    <b class="radio__title" id="npTitle">Car</b>
-                    <span class="mono radio__artist" id="npArtist">Shahriyor</span>
-                  </div>
-                </div>
-                <div class="wave" id="npWave" aria-hidden="true"></div>
-                <div class="radio__time mono"><span id="npPos">0:00</span><div class="radio__bar"><i id="npBar"></i></div><span id="npDur">0:00</span></div>
-                <div class="radio__ctrls">
-                  <button class="rbtn" id="npPrev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
-                  <button class="rbtn rbtn--play" id="npPlay" aria-label="Play / Pause"><svg class="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg><svg class="i-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
-                  <button class="rbtn" id="npNext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
-                  <span class="mono">Powered by Spotify</span>
-                </div>
-                <div class="radio__embed"><div id="spotifyEmbed"></div></div>
-              </div>
-              <ol class="radio__list" id="npList" data-lenis-prevent></ol>
-            </div>
-          </div>
         </div>
+              <a class="pitstop" href="life.html">
+          <span class="pitstop__kicker mono"><b>PIT</b> <span data-i18n="pit.kicker">Пит-стоп</span></span>
+          <span class="pitstop__title" data-i18n="pit.title">Вне кода: <em>F1, игры, аниме и жизнь.</em></span>
+          <span class="pitstop__go"><span data-i18n="pit.cta">Открыть</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
       </div>
 
       <footer class="footer wrap mono">
-        <span>© <span id="year">2026</span> Abrorov Shahriyor</span>
-        <span data-i18n="footer.made">Создан для высшей лиги.</span>
+        <a class="credit" href="https://shaha01.github.io/Shakhriyor/" target="_blank" rel="noopener">
+          <span class="credit__label" data-i18n="footer.credit">Дизайн и разработка</span>
+          <span class="credit__name">Abrorov Shahriyor</span>
+          <span class="credit__stripes" aria-hidden="true"><i></i><i></i><i></i></span>
+        </a>
+        <span>© <span id="year">2026</span> SHA · Portfolio</span>
         <a href="#top" class="footer__top"><span data-i18n="footer.top">Наверх</span> ↑</a>
       </footer>
     </section>
   </main>
 
-  <!-- ============ LIGHTBOX ============ -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
-    <button class="lightbox__close" id="lbClose" aria-label="Close">✕</button>
-    <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Previous">←</button>
-    <button class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Next">→</button>
-    <div class="lightbox__stage" id="lbStage"></div>
-    <div class="lightbox__counter mono" id="lbCounter"></div>
-  </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="assets/js/config.js?v=d16ca174"></script>
-  <script src="assets/js/i18n.js?v=f0e2b841"></script>
-  <script src="assets/js/media.js?v=f8e6314a"></script>
+  <script src="assets/js/config.js?v=bcfa0264"></script>
+  <script src="assets/js/i18n.js?v=6ea48fa3"></script>
+  <script src="assets/js/github.js?v=006a8cd9"></script>
   <script src="assets/js/tracks.js?v=76768120"></script>
-  <script src="assets/js/playlist.js?v=abb670de"></script>
-  <script src="assets/js/chess.js?v=e96f9fa2"></script>
-  <script src="assets/js/anime.js?v=26c32d60"></script>
   <script src="assets/js/sound.js?v=c173a240"></script>
-  <script src="assets/js/main.js?v=58fc0580"></script>
+  <script src="assets/js/main.js?v=6f1a9ef3"></script>
 </body>
 </html>
