@@ -1632,9 +1632,11 @@
     if (!reduced) {
       const SPEED = 46; // px per second
       let pos = 0, last = 0, raf = 0, paused = false, hovering = false, visible = false, resumeT = 0;
-      const pauseFor = (ms) => {
+      // release: give the strip back its scroll-snap. Hovering must not do that, otherwise the strip jumps to the
+      // nearest card the moment the pointer arrives or leaves; only a real drag / swipe / arrow needs the snap.
+      const pauseFor = (ms, release = true) => {
         paused = true; last = 0;
-        track.classList.remove("is-auto");
+        if (release) track.classList.remove("is-auto");
         clearTimeout(resumeT);
         resumeT = setTimeout(() => { paused = false; }, ms);
       };
@@ -1652,17 +1654,16 @@
           track.scrollLeft = pos;
         } else {
           last = 0;
-          track.classList.remove("is-auto");
         }
         raf = requestAnimationFrame(frame);
       };
       const kick = () => { if (!raf && visible) raf = requestAnimationFrame(frame); };
       root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovering = true; });
-      root.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovering = false; pauseFor(700); } });
+      root.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovering = false; pauseFor(700, false); } });
       root.addEventListener("pointerdown", () => pauseFor(6000), true);
-      addEventListener("pointerup", () => { if (paused) pauseFor(3000); });
+      addEventListener("pointerup", () => { if (paused) pauseFor(3000, false); });
       root.addEventListener("touchstart", () => pauseFor(6000), { passive: true });
-      track.addEventListener("wheel", () => pauseFor(4000), { passive: true });
+      track.addEventListener("wheel", (e) => pauseFor(4000, Math.abs(e.deltaX) > Math.abs(e.deltaY)), { passive: true });
       root.addEventListener("focusin", () => pauseFor(8000));
       document.addEventListener("visibilitychange", kick);
       if ("IntersectionObserver" in window) {
