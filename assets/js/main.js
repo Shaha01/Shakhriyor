@@ -338,7 +338,7 @@
      Projects
      --------------------------------------------------------- */
   const ghCache = {};
-  let projectsList = S.projects.slice();   // replaced by the live pinned list once pinned.json is loaded
+  const projectsList = S.projects.slice();   // the list is curated by hand in config.js
   const ART = ["cinema", "ember", "lime", "ice"];
   function renderProjects() {
     const grid = $("#projectsGrid");
@@ -377,53 +377,9 @@
     bindCursorTargets(grid);
   }
 
-  // The pinned list: raw.githubusercontent.com is always the latest commit (CORS-enabled), the local copy is the fallback.
-  async function loadPinned() {
-    const cfg = S.pinned || {};
-    const urls = [];
-    if (cfg.source) urls.push(`https://raw.githubusercontent.com/${cfg.source}/${cfg.branch || "master"}/pinned.json`);
-    urls.push("pinned.json");
-    for (const u of urls) {
-      try {
-        const r = await fetch(u, { cache: "no-cache" });
-        if (!r.ok) continue;
-        const list = await r.json();
-        if (Array.isArray(list) && list.length) return list;
-      } catch (e) { /* try the next source */ }
-    }
-    return null;
-  }
-
-  function buildProjects(pinned) {
-    const skip = new Set(((S.pinned && S.pinned.exclude) || []).map((x) => x.toLowerCase()));
-    const live = pinned.filter((x) => x && x.repo && !skip.has(x.repo.toLowerCase()));
-    const seen = new Set(live.map((x) => x.repo.toLowerCase()));
-    // cards marked `always` stay on the site even when the repo is not pinned
-    const extra = S.projects.filter((p) => p.always && !seen.has(p.repo.toLowerCase()));
-    return live.map((x) => {
-      const cur = S.projects.find((p) => p.repo.toLowerCase() === x.repo.toLowerCase()) || {};
-      ghCache[x.repo] = { stars: x.stars, pushed: x.pushed, desc: x.description && !/^https?:\/\//i.test(x.description) ? x.description : "" };
-      return {
-        repo: x.repo,
-        title: cur.title || x.name,
-        lang: cur.lang || x.language || "Code",
-        tag: cur.tag || (x.language || "GitHub").toUpperCase(),
-        art: cur.art || ART[Math.abs([...x.name].reduce((h, c) => h * 31 + c.charCodeAt(0), 7)) % ART.length],
-        desc: cur.desc || null,
-        demo: cur.demo || x.homepage || "",
-        preview: cur.preview || null,
-      };
-    }).concat(extra);
-  }
-
   async function fetchGitHub() {
     try {
-      const pinned = await loadPinned();
-      if (pinned) { const list = buildProjects(pinned); if (list.length) projectsList = list; }
-      renderProjects();
-    } catch (e) { /* keep the static list */ }
-    try {
-      // fresh stars / last update straight from the GitHub API (can be rate limited, then the numbers from pinned.json stay)
+      // stars / last update straight from the GitHub API (can be rate limited, then the cards just show "—")
       const user = fetch(`https://api.github.com/users/${S.links.github.split("/").pop()}`).then((r) => (r.ok ? r.json() : null));
       const res = await Promise.all(projectsList.map((p) => fetch(`https://api.github.com/repos/${p.repo}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)));
       res.forEach((j, i) => {

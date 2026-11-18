@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid slice">
+<style>
+text{font-family:'Arial Black','Arial Bold',Arial,sans-serif;font-weight:900}
+.m{font-family:Consolas,'JetBrains Mono','Courier New',monospace;font-weight:400;letter-spacing:.18em}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+
+<defs>
+ <radialGradient id="e1" cx=".2" cy=".75" r=".55"><stop offset="0" stop-color="#ff8c28" stop-opacity=".42"/><stop offset="1" stop-color="#ff8c28" stop-opacity="0"/></radialGradient>
+ <radialGradient id="e2" cx=".85" cy=".2" r=".5"><stop offset="0" stop-color="#ff2a3d" stop-opacity=".38"/><stop offset="1" stop-color="#ff2a3d" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="960" height="600" fill="#08080a"/>
+<rect width="960" height="600" fill="url(#e1)"/><rect width="960" height="600" fill="url(#e2)"/>
+<rect x="370" y="40" width="220" height="48" rx="24" fill="#000" stroke="#ffffff" stroke-opacity=".12"/>
+<circle cx="392" cy="64" r="15" fill="#1c1c22"><animate attributeName="fill" dur="5s" repeatCount="indefinite" keyTimes="0;0.12;.78;1" values="#1c1c22;#ff2a3d;#1c1c22;#1c1c22" calcMode="discrete"/></circle><circle cx="436" cy="64" r="15" fill="#1c1c22"><animate attributeName="fill" dur="5s" repeatCount="indefinite" keyTimes="0;0.24;.78;1" values="#1c1c22;#ff2a3d;#1c1c22;#1c1c22" calcMode="discrete"/></circle><circle cx="480" cy="64" r="15" fill="#1c1c22"><animate attributeName="fill" dur="5s" repeatCount="indefinite" keyTimes="0;0.36;.78;1" values="#1c1c22;#ff2a3d;#1c1c22;#1c1c22" calcMode="discrete"/></circle><circle cx="524" cy="64" r="15" fill="#1c1c22"><animate attributeName="fill" dur="5s" repeatCount="indefinite" keyTimes="0;0.48;.78;1" values="#1c1c22;#ff2a3d;#1c1c22;#1c1c22" calcMode="discrete"/></circle><circle cx="568" cy="64" r="15" fill="#1c1c22"><animate attributeName="fill" dur="5s" repeatCount="indefinite" keyTimes="0;0.60;.78;1" values="#1c1c22;#ff2a3d;#1c1c22;#1c1c22" calcMode="discrete"/></circle>
+<rect x="120" y="120" width="720" height="420" rx="18" fill="#0d1440" fill-opacity=".55" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
+<line x1="480" y1="120" x2="480" y2="540" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-dasharray="12 12"/>
+<line x1="120" y1="330" x2="840" y2="330" stroke="#fff" stroke-opacity=".15" stroke-width="2"/>
+<text x="480" y="372" text-anchor="middle" class="m" font-size="96" fill="#fff" fill-opacity=".08" letter-spacing="0">07 : 05</text>
+<rect x="148" width="14" height="96" rx="7" fill="#ff2a3d">
+ <animate attributeName="y" dur="4s" repeatCount="indefinite" keyTimes="0;.5;1" values="162;282;162"/>
+</rect>
+<rect x="798" width="14" height="96" rx="7" fill="#2b4cff">
+ <animate attributeName="y" dur="4s" repeatCount="indefinite" keyTimes="0;.25;.75;1" values="250;382;132;250"/>
+</rect>
+<circle r="11.0" fill="#ffd400" opacity="1.00"><animateMotion dur="4s" begin="0.00s" repeatCount="indefinite" path="M175 210 L785 430 L175 330 L785 180 Z"/></circle><circle r="9.2" fill="#ffd400" opacity="0.80"><animateMotion dur="4s" begin="-0.04s" repeatCount="indefinite" path="M175 210 L785 430 L175 330 L785 180 Z"/></circle><circle r="7.4" fill="#ffd400" opacity="0.60"><animateMotion dur="4s" begin="-0.08s" repeatCount="indefinite" path="M175 210 L785 430 L175 330 L785 180 Z"/></circle><circle r="5.6" fill="#ffd400" opacity="0.40"><animateMotion dur="4s" begin="-0.12s" repeatCount="indefinite" path="M175 210 L785 430 L175 330 L785 180 Z"/></circle><circle r="3.8" fill="#ffd400" opacity="0.20"><animateMotion dur="4s" begin="-0.16s" repeatCount="indefinite" path="M175 210 L785 430 L175 330 L785 180 Z"/></circle>
+<text x="904" y="64" text-anchor="end" class="m" font-size="18" fill="#ff2a3d">FIRST TO 15</text>
+<text x="120" y="590" class="m" font-size="15" fill="#8b8b97">VS CPU · 2P · ONLINE</text>
+
+</svg>

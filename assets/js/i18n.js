@@ -47,7 +47,7 @@ window.I18N = {
     "f1.rpm": "Обороты мотивации",
 
     "projects.label": "Проекты",
-    "projects.title": "Закреплено <em>на GitHub.</em>",
+    "projects.title": "Избранные <em>проекты.</em>",
     "projects.demo": "Live demo",
     "projects.code": "Код",
     "projects.all": "Все репозитории",
@@ -189,7 +189,7 @@ window.I18N = {
     "f1.rpm": "Motivation RPM",
 
     "projects.label": "Projects",
-    "projects.title": "Pinned <em>on GitHub.</em>",
+    "projects.title": "Selected <em>projects.</em>",
     "projects.demo": "Live demo",
     "projects.code": "Code",
     "projects.all": "All repositories",
@@ -331,7 +331,7 @@ window.I18N = {
     "f1.rpm": "Motivatsiya aylanishi",
 
     "projects.label": "Loyihalar",
-    "projects.title": "GitHub'da <em>qadalgan.</em>",
+    "projects.title": "Tanlangan <em>loyihalar.</em>",
     "projects.demo": "Live demo",
     "projects.code": "Kod",
     "projects.all": "Barcha repozitoriylar",

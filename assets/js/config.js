@@ -16,15 +16,9 @@ window.SITE = {
     email: "shahriyorabrorovtech@gmail.com",
   },
 
-  /* Закреплённые репозитории берутся с профиля GitHub сами (файл pinned.json обновляет GitHub Actions
-     раз в час). Закрепил новый проект, и он появится на сайте без правок кода.
-     exclude: репозитории, которые не надо показывать (например, сам сайт). */
-  pinned: { source: "Shaha01/Shakhriyor", branch: "master", exclude: ["Shaha01/Shakhriyor"] },
-
-  /* Необязательные «красивые» карточки для отдельных репозиториев: название, теги, описание на трёх языках,
-     демо, превью, вид карточки (art: cinema | cyber | ember | lime | ice). У остальных закреплённых
-     репозиториев всё берётся с GitHub (описание, язык, ссылка на демо).
-     always: true — показывать карточку, даже если репозиторий не закреплён (GitHub даёт закрепить максимум 6). */
+  /* Проекты добавляются вручную: карточки показываются в том порядке, в котором записаны.
+     Поля: repo (владелец/имя на GitHub), title, lang, tag, art (запасной фон без превью: cinema | cyber | ember | lime | ice),
+     desc (ru/en/uz), demo (ссылка на live demo), preview (картинка/анимированный SVG 16:10 из media/projects). */
   projects: [
     {
       repo: "Shaha01/CiniPhille",
@@ -38,7 +32,7 @@ window.SITE = {
         uz: "Vue 3 + Pinia'da TMDB jonli ma'lumotlari bilan kino katalogi: filmlar va seriallar, qidiruv, treylerlar, aktyorlar, tez kunda va sevimlilar. RU/EN.",
       },
       demo: "https://shaha01.github.io/CiniPhille",
-      preview: "media/projects/ciniphille.webp",
+      preview: "media/projects/ciniphille.svg",
     },
     {
       repo: "Shaha01/Cyberpunk2077-VUE",
@@ -52,7 +46,7 @@ window.SITE = {
         uz: "Vue'da Cyberpunk 2077 fan-landingi: neyrointerfeys yuklanish ekrani, lor, Night City tumanlari, personajlar, xronologiya va Phantom Liberty. RU/EN/UZ.",
       },
       demo: "https://shaha01.github.io/Cyberpunk2077-VUE/",
-      preview: "media/projects/cyberpunk.webp",
+      preview: "media/projects/cyberpunk.svg",
     },
     {
       repo: "Shaha01/PingPong",
@@ -66,7 +60,7 @@ window.SITE = {
         uz: "Canvas'da F1 uslubidagi ping-pong: chiroqlar bo'yicha start, kompyuterga qarshi, bitta klaviaturada ikki kishi yoki PeerJS orqali onlayn. 15 ochkogacha.",
       },
       demo: "https://shaha01.github.io/PingPong",
-      preview: "media/projects/pingpong.webp",
+      preview: "media/projects/pingpong.svg",
     },
     {
       repo: "Shaha01/Weather-VUE",
@@ -80,7 +74,7 @@ window.SITE = {
         uz: "Vue va OpenWeather'da real vaqtdagi ob-havo: geolokatsiya va shahar qidiruvi, mahalliy vaqt, soatlik va 8 kunlik prognoz, yomg'ir, qor va momaqaldiroqning jonli effektlari. °C/°F, RU/EN.",
       },
       demo: "https://shaha01.github.io/Weather-VUE/",
-      preview: "media/projects/weather.webp",
+      preview: "media/projects/weather.svg",
     },
     {
       repo: "Shaha01/F1-Maps",
@@ -88,14 +82,13 @@ window.SITE = {
       lang: "JavaScript · Three.js",
       tag: "3D CIRCUITS",
       art: "ember",
-      always: true,
       desc: {
         ru: "3D-трассы Формулы-1 на Three.js: все автодромы сезона 2026 с реальным рельефом, симуляция круга с телеметрией (скорость, передача, газ/тормоз), камеры орбита/погоня/онборд и профиль высот. RU/EN/UZ.",
         en: "Formula 1 circuits in 3D on Three.js: every 2026 track with real elevation, a simulated lap with telemetry (speed, gear, throttle/brake), orbit/chase/onboard cameras and an elevation profile. RU/EN/UZ.",
         uz: "Three.js'da Formula-1 trassalari 3D'da: 2026 mavsumining barcha avtodromlari haqiqiy relyef bilan, telemetriyali aylana simulyatsiyasi (tezlik, uzatma, gaz/tormoz), orbita/quvish/onbord kameralari va balandlik profili. RU/EN/UZ.",
       },
       demo: "https://shaha01.github.io/F1-Maps/",
-      preview: "media/projects/f1-maps.webp",
+      preview: "media/projects/f1-maps.svg",
     },
     {
       repo: "Monarch-IT-Team/monarch-portfolio",
@@ -103,14 +96,13 @@ window.SITE = {
       lang: "Astro · Three.js",
       tag: "TEAM · MONARCH IT",
       art: "lime",
-      always: true,
       desc: {
         ru: "Командный проект Monarch IT: сайт-визитка на Astro, TypeScript и Three.js со своими шейдерами. При прокрутке камера отдаляется от звезды до вселенной, есть генеративный звук, терминал и проекты, которые подтягиваются с GitHub. UZ/RU/EN.",
         en: "A Monarch IT team project: a portfolio site on Astro, TypeScript and Three.js with custom shaders. Scrolling pulls the camera out from a star to the whole universe, with generative sound, a terminal and projects pulled from GitHub. UZ/RU/EN.",
         uz: "Monarch IT jamoaviy loyihasi: Astro, TypeScript va o'z shaderlari bilan Three.js'da sayt-vizitka. Aylantirganda kamera yulduzdan butun koinotgacha uzoqlashadi, generativ ovoz, terminal va GitHub'dan olinadigan loyihalar bor. UZ/RU/EN.",
       },
       demo: "https://monarch-it-team.github.io/monarch-portfolio/",
-      preview: "media/projects/monarch.webp",
+      preview: "media/projects/monarch.svg",
     },
   ],
 
