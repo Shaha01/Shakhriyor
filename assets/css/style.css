@@ -874,3 +874,7 @@ em { font-style: normal; color: var(--neon); }
   .js .reveal { opacity: 1; transform: none; }
   .js .reveal-img img { clip-path: none; }
 }
+
+/* last section on the personal page: footer follows directly, no dead space under it */
+.music { padding-bottom: 0; }
+.music .footer { padding-top: 40px; padding-bottom: 28px; margin-top: 70px; }
