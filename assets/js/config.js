@@ -17,6 +17,13 @@ window.SITE = {
     email: "shahriyorabrorovtech@gmail.com",
   },
 
+  /* Форма «Написать мне»: адрес /api/contact у Telegram-бота (проект «Static bot», statsbot/contact.py),
+     бот пересылает сообщение в закрытый канал. Пока пусто, форма на сайте скрыта.
+     Пример: "https://shahriyor-contact.duckdns.org/api/contact". Токен бота в сайт НЕ кладём. */
+  contact: {
+    endpoint: "https://129-151-197-56.sslip.io/api/contact",
+  },
+
   /* Резюме (PDF): собираются из этого файла командой node tools/cv/build.mjs */
   cv: {
     ru: "media/cv/Abrorov_Shahriyor_CV_RU.pdf",

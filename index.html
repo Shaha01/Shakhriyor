@@ -6,16 +6,45 @@
   <title>Abrorov Shahriyor — Full Stack-разработчик</title>
   <meta name="description" content="Abrorov Shahriyor — Full Stack-разработчик, изучаю AI и ML, студент TSUE. Проекты на Vue и Three.js, приложение Kanatobi, резюме.">
   <meta name="theme-color" content="#050506">
+  <link rel="canonical" href="https://shaha01.github.io/Shakhriyor/">
+  <meta property="og:site_name" content="Abrorov Shahriyor">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shaha01.github.io/Shakhriyor/">
   <meta property="og:title" content="Abrorov Shahriyor — Full Stack developer">
   <meta property="og:description" content="Full Stack developer · learning AI & ML · TSUE student">
-  <meta property="og:image" content="media/photos/022-l.webp">
-  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://shaha01.github.io/Shakhriyor/media/og.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Abrorov Shahriyor — Full Stack developer">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Abrorov Shahriyor — Full Stack developer">
+  <meta name="twitter:description" content="Full Stack developer · learning AI & ML · TSUE student">
+  <meta name="twitter:image" content="https://shaha01.github.io/Shakhriyor/media/og.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abrorov Shahriyor",
+    "url": "https://shaha01.github.io/Shakhriyor/",
+    "image": "https://shaha01.github.io/Shakhriyor/media/og.jpg",
+    "jobTitle": "Full Stack developer",
+    "description": "Full Stack developer, learning AI and ML, TSUE student.",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "TSUE" },
+    "knowsAbout": ["Full Stack development", "Vue", "Three.js", "Artificial intelligence", "Machine learning"],
+    "sameAs": [
+      "https://github.com/Shaha01",
+      "https://t.me/shakhriyorabrorov",
+      "https://www.instagram.com/shahriyor_abrorov"
+    ]
+  }
+  </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050506'/%3E%3Ctext x='32' y='38' font-family='Arial Black,Arial' font-weight='900' font-size='21' text-anchor='middle' fill='%23ffffff' transform='skewX(-8) translate(5 0)'%3ESHA%3C/text%3E%3Crect x='14' y='45' width='12' height='5' rx='1' fill='%23ff2a3d'/%3E%3Crect x='27' y='45' width='12' height='5' rx='1' fill='%23ffd400'/%3E%3Crect x='40' y='45' width='12' height='5' rx='1' fill='%232b4cff'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="assets/vendor/fonts/unbounded-cyrillic-c86556.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="assets/vendor/fonts/manrope-cyrillic-9f2868.woff2" crossorigin>
   <link rel="preload" as="image" href="media/photos/022-l.webp">
-  <link rel="stylesheet" href="assets/css/style.css?v=9eb6e757">
+  <link rel="stylesheet" href="assets/vendor/fonts.css?v=0cc8c2da">
+  <link rel="stylesheet" href="assets/css/style.css?v=28e8b410">
 </head>
 <body class="is-loading" data-title="meta.title">
   <noscript>
@@ -269,6 +298,24 @@
           </div>
 
         </div>
+
+        <!-- Shown only when SITE.contact.endpoint is set in config.js (see tools/contact-relay) -->
+        <form class="msg" id="msgForm" novalidate hidden>
+          <div class="msg__head">
+            <span class="mono msg__label" data-i18n="msg.label">Написать мне</span>
+            <p class="msg__note" data-i18n="msg.note">Сообщение придёт мне напрямую в Telegram. Имя и контакт нужны только для ответа.</p>
+          </div>
+          <div class="msg__row">
+            <label class="msg__f"><span class="mono" data-i18n="msg.name">Имя</span><input name="name" type="text" maxlength="80" autocomplete="name"></label>
+            <label class="msg__f"><span class="mono" data-i18n="msg.reply">Telegram или почта для ответа</span><input name="contact" type="text" maxlength="120" required autocomplete="email"></label>
+          </div>
+          <label class="msg__f"><span class="mono" data-i18n="msg.message">Сообщение</span><textarea name="message" rows="5" maxlength="2000" required></textarea></label>
+          <input class="msg__hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="msg__foot">
+            <button class="msg__send" type="submit"><span data-i18n="msg.send">Отправить</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <p class="msg__status mono" role="status" aria-live="polite"></p>
+          </div>
+        </form>
               <a class="pitstop" href="life.html">
           <span class="pitstop__kicker mono"><b>PIT</b> <span data-i18n="pit.kicker">Пит-стоп</span></span>
           <span class="pitstop__title" data-i18n="pit.title">Вне кода: <em>F1, игры, аниме и жизнь.</em></span>
@@ -288,14 +335,14 @@
     </section>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="assets/js/config.js?v=bcfa0264"></script>
-  <script src="assets/js/i18n.js?v=6ea48fa3"></script>
+  <script src="assets/vendor/gsap.min.js?v=47da594c"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
+  <script src="assets/vendor/lenis.min.js?v=79e3a064"></script>
+  <script src="assets/js/config.js?v=64bce844"></script>
+  <script src="assets/js/i18n.js?v=8c0b1a98"></script>
   <script src="assets/js/github.js?v=006a8cd9"></script>
   <script src="assets/js/tracks.js?v=76768120"></script>
   <script src="assets/js/sound.js?v=c173a240"></script>
-  <script src="assets/js/main.js?v=6f1a9ef3"></script>
+  <script src="assets/js/main.js?v=e6b17c82"></script>
 </body>
 </html>

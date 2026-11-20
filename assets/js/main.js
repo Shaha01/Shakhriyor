@@ -278,6 +278,7 @@
     $$("[data-age-num]").forEach((el) => { el.textContent = age; });
 
     $$("[data-cv]").forEach((a) => { a.href = (S.cv && (S.cv[l] || S.cv.en)) || "#"; });
+    document.dispatchEvent(new CustomEvent("sha:lang")); // the message form re-renders its status text
     $$(".lang button").forEach((b) => b.classList.toggle("is-active", b.dataset.lang === l));
     moveLangPill();
     renderProjects();
@@ -1208,6 +1209,65 @@
     b.textContent = t("contact.copied"); b.classList.add("is-done");
     setTimeout(() => { b.textContent = t("contact.copy"); b.classList.remove("is-done"); }, 1800);
   });
+
+  /* ---------------------------------------------------------
+     Message form -> relay -> Telegram.
+     The bot token lives only on the relay server (tools/contact-relay); the page just POSTs JSON to SITE.contact.endpoint.
+     --------------------------------------------------------- */
+  const msgForm = $("#msgForm");
+  const msgEndpoint = S.contact && S.contact.endpoint;
+  let msgState = null; // { key, kind } - re-rendered when the language changes
+  const msgStatus = msgForm && $(".msg__status", msgForm);
+  function renderMsgStatus() {
+    if (!msgStatus) return;
+    msgStatus.classList.toggle("is-ok", !!msgState && msgState.kind === "ok");
+    msgStatus.classList.toggle("is-err", !!msgState && msgState.kind === "err");
+    if (!msgState) { msgStatus.textContent = ""; return; }
+    msgStatus.textContent = t(msgState.key);
+    if (msgState.mail) {
+      const a = document.createElement("a");
+      a.href = `mailto:${S.links.email}`; a.textContent = S.links.email;
+      msgStatus.append(" ", a);
+    }
+  }
+  document.addEventListener("sha:lang", renderMsgStatus);
+  if (msgForm && msgEndpoint) {
+    msgForm.hidden = false;
+    const openedAt = Date.now();
+    const COOLDOWN = 60000;
+    const setState = (key, kind, mail) => { msgState = key ? { key, kind, mail } : null; renderMsgStatus(); };
+    msgForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = msgForm.elements;
+      const name = f.name.value.trim(), contact = f.contact.value.trim(), message = f.message.value.trim();
+      const bad = (el, on) => el.setAttribute("aria-invalid", on ? "true" : "false");
+      bad(f.contact, contact.length < 3); bad(f.message, message.length < 5);
+      if (contact.length < 3 || message.length < 5) { setState("msg.err.empty", "err"); return; }
+      const last = Number(store.get("msgSentAt")) || 0;
+      if (Date.now() - last < COOLDOWN) { setState("msg.err.wait", "err"); return; }
+
+      const btn = $(".msg__send", msgForm), label = $("span", btn);
+      btn.disabled = true; label.textContent = t("msg.sending"); setState(null);
+      const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 15000);
+      try {
+        const res = await fetch(msgEndpoint, {
+          method: "POST", headers: { "Content-Type": "application/json" }, signal: ctrl.signal,
+          body: JSON.stringify({ name, contact, message, lang, page: location.pathname, website: f.website.value, took: Date.now() - openedAt }),
+        });
+        if (res.status === 429) { setState("msg.err.wait", "err"); }
+        else if (!res.ok) { throw new Error("HTTP " + res.status); }
+        else {
+          store.set("msgSentAt", String(Date.now()));
+          msgForm.reset(); bad(f.contact, false); bad(f.message, false);
+          SFX.play("success"); setState("msg.sent", "ok");
+        }
+      } catch (err) {
+        setState("msg.err.fail", "err", true);
+      } finally {
+        clearTimeout(timer); btn.disabled = false; label.textContent = t("msg.send");
+      }
+    });
+  }
 
   /* ---------------------------------------------------------
      Cursor, magnetic, tilt

@@ -36,6 +36,15 @@ Both pages share one stylesheet and one `assets/js/main.js`; every block in the 
 | `python -I tools/bump-version.py .` | Adds `?v=<hash>` to css/js links in every page (also done by the workflow) |
 | `python -I tools/github-data.py .` | Regenerates `assets/js/github.js` |
 | `node tools/cv/build.mjs .` | Builds the CV PDFs (RU / EN / UZ) into `media/cv/` with headless Chrome |
+| `python -I tools/og-image.py .` | Redraws the link-preview cards `media/og.jpg` and `media/og-life.jpg` (1200×630, needs Pillow) |
+
+## Self-hosted libraries
+
+GSAP, ScrollTrigger and Lenis live in `assets/vendor/`, fonts (Unbounded, Manrope, JetBrains Mono: latin, latin-ext, cyrillic) in `assets/vendor/fonts/`. The site makes no requests to third-party CDNs or Google Fonts. To update a library, replace the file and keep the name.
+
+## Contact form → Telegram
+
+The "Write to me" form is hidden until `contact.endpoint` is set in `assets/js/config.js`. It posts JSON to `/api/contact` of the owner's Telegram bot (a separate private project, `statsbot/contact.py`), which holds the token, rate-limits and filters spam, and forwards the message to a private channel. The bot answers `200` ok, `400` empty fields, `429` too many messages, `502` Telegram unavailable; the page shows a matching message in the visitor's language. The bot's README describes the HTTPS address (Caddy exposes only this one path).
 
 ## Run locally
 

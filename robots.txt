@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shaha01.github.io/Shakhriyor/sitemap.xml
